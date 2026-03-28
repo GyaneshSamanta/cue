@@ -2,7 +2,7 @@
 ## `gyanesh-help` — Cross-Platform CLI Developer Utility
 **Version:** 1.0-draft  
 **Status:** For Review  
-**Author:** Product Management  
+**Author:** Gyanesh Samanta
 **Last Updated:** 2026-03-28
 
 ---
