@@ -9,13 +9,9 @@
   [![GitHub repo size](https://img.shields.io/github/repo-size/GyaneshSamanta/Gyanesh-help?style=flat-square)](https://github.com/GyaneshSamanta/Gyanesh-help)
 </div>
 
-### 📺 Interactive Onboarding Wizard
+### 📺 Welcome to v2.0
 
 ![Onboarding Demo](https://raw.githubusercontent.com/GyaneshSamanta/Gyanesh-help/main/docs/assets/onboarding_demo.gif)
-
-### 📺 Environment Store (TUI)
-
-![Store Demo](https://raw.githubusercontent.com/GyaneshSamanta/Gyanesh-help/main/docs/assets/store_demo.gif)
 
 ---
 
