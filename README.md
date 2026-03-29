@@ -9,6 +9,12 @@
   [![GitHub repo size](https://img.shields.io/github/repo-size/GyaneshSamanta/Gyanesh-help?style=flat-square)](https://github.com/GyaneshSamanta/Gyanesh-help)
 </div>
 
+### 📺 Demos
+
+| Onboarding Experience | Environment Store (TUI) |
+| :---: | :---: |
+| ![Onboarding Demo](https://raw.githubusercontent.com/GyaneshSamanta/Gyanesh-help/main/docs/assets/onboarding_demo.webp) | ![Store Demo](https://raw.githubusercontent.com/GyaneshSamanta/Gyanesh-help/main/docs/assets/store_demo.webp) |
+
 ---
 
 ## The Core Concept
