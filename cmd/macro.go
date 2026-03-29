@@ -2,16 +2,51 @@ package cmd
 
 import (
 	"fmt"
+	"sort"
 
 	"github.com/spf13/cobra"
 
 	"github.com/GyaneshSamanta/gyanesh-help/internal/macro"
+	"github.com/GyaneshSamanta/gyanesh-help/internal/tui"
 	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
 )
+
+func pickMacro() string {
+	items := make([]tui.PickerItem, 0, len(macro.Registry))
+	for _, m := range macro.Registry {
+		tag := "built-in"
+		if !m.BuiltIn {
+			tag = "custom"
+		}
+		items = append(items, tui.PickerItem{
+			Name:        m.Name,
+			Description: m.Description,
+			Tag:         tag,
+		})
+	}
+	sort.Slice(items, func(i, j int) bool {
+		return items[i].Name < items[j].Name
+	})
+
+	idx, err := tui.RunPicker("Select Macro", items)
+	if err != nil || idx == -1 {
+		return ""
+	}
+	return items[idx].Name
+}
 
 var macroCmd = &cobra.Command{
 	Use:   "macro",
 	Short: "Manage macros (add, list, remove)",
+	Run: func(cmd *cobra.Command, args []string) {
+		name := pickMacro()
+		if name == "" {
+			return
+		}
+		if err := macro.Execute(name, map[string]string{}); err != nil {
+			ui.PrintError(err.Error())
+		}
+	},
 }
 
 var macroListCmd = &cobra.Command{
@@ -38,11 +73,22 @@ var explainCmd = &cobra.Command{
 	Args:  cobra.MaximumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		listFlag, _ := cmd.Flags().GetBool("list")
-		if listFlag || len(args) == 0 {
+		if listFlag {
 			macro.ListAll()
 			return
 		}
-		if err := macro.Explain(args[0]); err != nil {
+
+		name := ""
+		if len(args) == 1 {
+			name = args[0]
+		} else {
+			name = pickMacro()
+			if name == "" {
+				return
+			}
+		}
+
+		if err := macro.Explain(name); err != nil {
 			ui.PrintError(err.Error())
 		}
 	},

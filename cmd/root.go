@@ -12,22 +12,24 @@ import (
 	"github.com/GyaneshSamanta/gyanesh-help/internal/config"
 	"github.com/GyaneshSamanta/gyanesh-help/internal/history"
 	"github.com/GyaneshSamanta/gyanesh-help/internal/macro"
+	"github.com/GyaneshSamanta/gyanesh-help/internal/store"
 	_ "github.com/GyaneshSamanta/gyanesh-help/internal/macro/builtins"
 	_ "github.com/GyaneshSamanta/gyanesh-help/internal/store/stacks"
 	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
 )
 
 var (
-	version   string
-	buildDate string
-	noColor   bool
-	verbose   bool
-	osAdapter adapter.OSAdapter
+	appVersion  string
+	buildDate   string
+	noColor     bool
+	verbose     bool
+	osAdapter   adapter.OSAdapter
+	isFirstRun  bool
 )
 
 // SetVersionInfo sets the version info from ldflags.
 func SetVersionInfo(v, b string) {
-	version = v
+	appVersion = v
 	buildDate = b
 	rootCmd.Version = v
 }
@@ -41,18 +43,7 @@ var rootCmd = &cobra.Command{
   smart history, and workspace backup — all offline, all local.`,
 
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
-		if noColor {
-			ui.SetColor(false)
-		}
-
-		// Load config
-		cfg, err := config.Load()
-		if err != nil {
-			ui.PrintWarning(fmt.Sprintf("Config error: %v (using defaults)", err))
-		}
-		if cfg != nil && !cfg.UI.Color {
-			ui.SetColor(false)
-		}
+		initConfig()
 
 		// Detect OS
 		osAdapter = adapter.Detect()
@@ -67,10 +58,36 @@ var rootCmd = &cobra.Command{
 		// Load user macros
 		macroPath := filepath.Join(config.ConfigDir(), "macros.toml")
 		macro.LoadUserMacros(macroPath)
+
+		// Automatically trigger onboarding for entirely new installs
+		if isFirstRun && cmd.Name() != "onboarding" && cmd.Name() != "help" && cmd.Name() != "version" {
+			ui.PrintInfo("New installation detected. Launching interactive onboarding...\n")
+			RunOnboarding()
+			// Flag it as not first run anymore so subsequent nested commands don't trip it if this was just PreRun.
+			isFirstRun = false
+		}
 	},
 	PersistentPostRun: func(cmd *cobra.Command, args []string) {
 		history.Close()
 	},
+}
+
+// initConfig loads the config file, setting global user preferences.
+func initConfig() {
+	ui.SetColor(!noColor)
+
+	userCfg := filepath.Join(config.ConfigDir(), "config.toml")
+	if _, errStat := os.Stat(userCfg); os.IsNotExist(errStat) {
+		isFirstRun = true
+	}
+
+	cfg, err := config.Load()
+	if err != nil {
+		ui.PrintError(fmt.Sprintf("Config error: %v (using defaults)", err))
+	}
+	if cfg != nil && !cfg.UI.Color {
+		ui.SetColor(false)
+	}
 }
 
 func init() {
@@ -100,13 +117,17 @@ var statusCmd = &cobra.Command{
 	Short: "Show gyanesh-help status and session info",
 	Run: func(cmd *cobra.Command, args []string) {
 		ui.PrintHeader("gyanesh-help Status")
-		fmt.Printf("  Version:    %s\n", version)
-		fmt.Printf("  Build:      %s\n", buildDate)
-		fmt.Printf("  OS:         %s\n", osAdapter.OSName())
-		fmt.Printf("  Distro:     %s\n", osAdapter.OSDistro())
-		fmt.Printf("  Pkg Manager: %s\n", osAdapter.PackageManagerName())
-		fmt.Printf("  Config Dir: %s\n", config.ConfigDir())
-		fmt.Printf("  GPU:        %v\n", osAdapter.HasGPU())
+		fmt.Printf("  Version:      %s\n", appVersion)
+		fmt.Printf("  Build:        %s\n", buildDate)
+		fmt.Printf("  OS:           %s (%s)\n", osAdapter.OSName(), osAdapter.OSDistro())
+		fmt.Printf("  Pkg Manager:  %s\n", osAdapter.PackageManagerName())
+		fmt.Printf("  Config Dir:   %s\n", config.ConfigDir())
+		fmt.Printf("  GPU:          %v\n\n", osAdapter.HasGPU())
+
+		ui.PrintHeader("Environment Check")
+		stacks := store.ListStacks()
+		fmt.Printf("  Available Stacks: %d\n", len(stacks))
+		fmt.Printf("  Built-in Macros:  %d\n", len(macro.Registry))
 
 		// Show active tag
 		sessionFile := filepath.Join(config.ConfigDir(), "session.json")
@@ -116,7 +137,14 @@ var statusCmd = &cobra.Command{
 			}
 			json.Unmarshal(data, &session)
 			if session.ActiveTag != "" {
-				fmt.Printf("  Active Tag: %s\n", session.ActiveTag)
+				fmt.Printf("\n  Active Project Tag: %s\n", session.ActiveTag)
+			}
+		}
+
+		if len(stacks) > 0 {
+			fmt.Println("\n  Available Environments:")
+			for _, s := range stacks {
+				fmt.Printf("  - %s (%s)\n", s.Name(), formatSize(s.EstimatedSizeMB()))
 			}
 		}
 	},

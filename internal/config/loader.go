@@ -113,6 +113,10 @@ func Load() (*Config, error) {
 
 	// Layer: user config
 	userCfg := filepath.Join(dir, "config.toml")
+	if _, err := os.Stat(userCfg); os.IsNotExist(err) {
+		writeDefaultConfig(userCfg)
+	}
+
 	if _, err := os.Stat(userCfg); err == nil {
 		if _, err := toml.DecodeFile(userCfg, cfg); err != nil {
 			return nil, err
@@ -127,4 +131,43 @@ func Load() (*Config, error) {
 
 	Current = cfg
 	return cfg, nil
+}
+
+func writeDefaultConfig(path string) {
+	content := `# gyanesh-help User Configuration
+# This file overrides the compiled-in defaults.
+
+[core]
+lock_poll_interval_secs = 5
+lock_timeout_mins = 30
+adaptive_backoff = true
+notify_on_completion = true
+
+[network]
+probe_host = "1.1.1.1"
+probe_fallback_host = "8.8.8.8"
+probe_fallback_port = 53
+fail_threshold = 3
+recovery_threshold = 1
+probe_interval_secs = 10
+
+[history]
+max_entries = 50000
+default_display_count = 20
+export_dir = '` + filepath.Join(ConfigDir(), "exports") + `'
+
+[workspace]
+github_repo_name = "dev-workspace-backup"
+backup_shell_configs = true
+backup_vscode = false
+backup_history = false
+auto_backup_interval_hours = 0
+
+[ui]
+color = true
+progress_style = "bar"
+explain_after_macro = true
+`
+	os.MkdirAll(filepath.Dir(path), 0755)
+	os.WriteFile(path, []byte(content), 0644)
 }
