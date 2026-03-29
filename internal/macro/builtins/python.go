@@ -34,4 +34,23 @@ go into this isolated environment. Deactivate with:
 ─────────────────────────────────────────────────────`,
 		BuiltIn: true,
 	})
+
+	// Add an alias macro for 'python-venv-here' to match spec
+	reg(&macro.Macro{
+		Name: "python-venv-here", Category: "python",
+		Description: "Create a Python virtual environment in current directory",
+		Commands: []macro.Step{
+			{OS: "linux", Command: "python3 -m venv .venv"},
+			{OS: "darwin", Command: "python3 -m venv .venv"},
+			{OS: "windows", Command: `python -m venv .venv`},
+		},
+		Explanation: `
+✔ Virtual environment created at ./.venv!
+─────────────────────────────────────────────────────
+To activate it, run the following:
+  macOS/Linux: source .venv/bin/activate
+  Windows:     .venv\Scripts\activate
+─────────────────────────────────────────────────────`,
+		BuiltIn: true,
+	})
 }

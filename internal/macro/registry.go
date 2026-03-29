@@ -11,11 +11,13 @@ type Macro struct {
 	Name        string
 	Category    string
 	Description string
+	Command     string // Simple single-command (alternative to Commands)
 	Commands    []Step
 	Explanation string
 	Flags       []Flag
 	Dangerous   bool
 	BuiltIn     bool
+	Source      string // e.g. "builtin", "plugin:<name>", "user"
 }
 
 // Step is a single shell command, optionally OS-gated.

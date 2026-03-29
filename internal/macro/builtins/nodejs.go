@@ -16,4 +16,17 @@ Review changes: git diff package.json package-lock.json
 ─────────────────────────────────────────────────────`,
 		BuiltIn: true,
 	})
+
+	reg(&macro.Macro{
+		Name: "node-version-check", Category: "nodejs",
+		Description: "Verify installation by printing Node and NPM versions",
+		Commands:    []macro.Step{{OS: "all", Command: "node -v && npm -v"}},
+		Explanation: `
+✔ Displayed current Node and NPM versions.
+─────────────────────────────────────────────────────
+If these versions do not match your project requirements,
+consider running 'gyanesh-help version' to switch runtimes.
+─────────────────────────────────────────────────────`,
+		BuiltIn: true,
+	})
 }

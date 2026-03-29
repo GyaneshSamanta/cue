@@ -130,4 +130,44 @@ next git commit.
 ─────────────────────────────────────────────────────`,
 		BuiltIn: true,
 	})
+
+	reg(&macro.Macro{
+		Name: "git-pr", Category: "git",
+		Description: "Create a PR in the browser using GitHub CLI",
+		Commands:    []macro.Step{{OS: "all", Command: "gh pr create --web"}},
+		Explanation: `
+✔ GitHub CLI launched the Pull Request page in your browser.
+─────────────────────────────────────────────────────
+This uses the official 'gh' command line tool.
+Ensure you have run 'gh auth login' previously.
+─────────────────────────────────────────────────────`,
+		BuiltIn: true,
+	})
+
+	reg(&macro.Macro{
+		Name: "git-sync", Category: "git",
+		Description: "Fetch main, rebase current branch, and push",
+		Commands:    []macro.Step{{OS: "all", Command: "git pull --rebase origin main && git push origin HEAD"}},
+		Explanation: `
+✔ Branch successfully synced with remote main.
+─────────────────────────────────────────────────────
+This operation pulled the most recent changes from main,
+rebased your local commits on top of them, and pushed
+your updated branch back to the remote.
+─────────────────────────────────────────────────────`,
+		BuiltIn: true,
+	})
+
+	reg(&macro.Macro{
+		Name: "git-contributors", Category: "git",
+		Description: "Print a leaderboard of contributors",
+		Commands:    []macro.Step{{OS: "all", Command: "git shortlog -sn --no-merges"}},
+		Explanation: `
+✔ Leaderboard created.
+─────────────────────────────────────────────────────
+This prints a summary of commits per author, sorted
+by commit count. Merges are ignored.
+─────────────────────────────────────────────────────`,
+		BuiltIn: true,
+	})
 }

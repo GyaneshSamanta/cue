@@ -21,7 +21,7 @@ func Execute(name string, flags map[string]string) error {
 			msg += fmt.Sprintf(" Did you mean '%s'?", closest)
 		}
 		msg += " Run 'gyanesh-help explain --list' to see all."
-		return fmt.Errorf(msg)
+		return fmt.Errorf("%s", msg)
 	}
 
 	// Dangerous action gate

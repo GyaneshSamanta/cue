@@ -33,4 +33,35 @@ Falls back to 'sh' if 'bash' is not available.
 ─────────────────────────────────────────────────────`,
 		BuiltIn: true,
 	})
+
+	reg(&macro.Macro{
+		Name: "docker-compose-restart", Category: "docker",
+		Description: "Restart all docker-compose services gracefully",
+		Commands: []macro.Step{
+			{OS: "all", Command: "docker-compose down && docker-compose up -d"},
+		},
+		Explanation: `
+✔ Services restarted successfully.
+─────────────────────────────────────────────────────
+This brings down all running containers defined in your
+docker-compose.yml and immediately starts them again
+in detached mode.
+─────────────────────────────────────────────────────`,
+		BuiltIn: true,
+	})
+
+	reg(&macro.Macro{
+		Name: "nuke-docker-volume", Category: "docker", Dangerous: true,
+		Description: "Remove all dangling docker volumes to free space",
+		Commands: []macro.Step{
+			{OS: "all", Command: "docker volume rm $(docker volume ls -qf dangling=true)"},
+		},
+		Explanation: `
+✔ Orphaned volumes destroyed.
+─────────────────────────────────────────────────────
+This forcibly removes any volumes that are no longer
+attached to a container, freeing up disk space.
+─────────────────────────────────────────────────────`,
+		BuiltIn: true,
+	})
 }
