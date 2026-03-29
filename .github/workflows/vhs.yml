@@ -1,0 +1,38 @@
+name: Generate VHS GIFs
+
+on:
+  push:
+    paths:
+      - 'docs/vhs/*.tape'
+      - '.github/workflows/vhs.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  vhs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: Build gyanesh-help CLI
+        run: |
+          go build -ldflags="-s -w" -o /usr/local/bin/gyanesh-help .
+
+      - name: Generate VHS GIFs
+        uses: charmbracelet/vhs-action@v2
+        with:
+          path: 'docs/vhs/*.tape'
+
+      - name: Commit and Push GIFs
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs(vhs): auto-generate and update terminal GIFs"
+          file_pattern: "docs/assets/*.gif"

@@ -13,7 +13,7 @@
 
 | Onboarding Experience | Environment Store (TUI) |
 | :---: | :---: |
-| ![Onboarding Demo](https://raw.githubusercontent.com/GyaneshSamanta/Gyanesh-help/main/docs/assets/onboarding_demo.webp) | ![Store Demo](https://raw.githubusercontent.com/GyaneshSamanta/Gyanesh-help/main/docs/assets/store_demo.webp) |
+| ![Onboarding Demo](https://raw.githubusercontent.com/GyaneshSamanta/Gyanesh-help/main/docs/assets/onboarding_demo.gif) | ![Store Demo](https://raw.githubusercontent.com/GyaneshSamanta/Gyanesh-help/main/docs/assets/store_demo.gif) |
 
 ---
 
