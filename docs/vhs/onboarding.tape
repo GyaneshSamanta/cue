@@ -5,35 +5,34 @@ Set Height 800
 Set Padding 30
 Set Theme "TokyoNight"
 
-# Warm up
+# 1. Warm up
 Sleep 1s
 
-# Launch
+# 2. Launch
 Type "gyanesh-help onboarding"
 Enter
-Sleep 3s
+Sleep 4s
 
-# First prompt: "Press [Enter] or type 'y' to continue..."
-# We use Enter here.
+# 3. First prompt: "Press [Enter] or type 'y' to continue..."
+# We use Enter first.
 Enter
 Sleep 3s
 
-# Second prompt: "Would you like to install a stack right now?"
-# Type y to trigger the store picker
+# 4. Second prompt: "Would you like to install a stack right now?"
+# Type "y" THEN hit Enter!
 Type "y"
-Sleep 500ms
+Sleep 1s
 Enter
-Sleep 3s
+Sleep 5s
 
-# TUI interaction
+# 5. TUI interaction
 Down
-Sleep 800ms
+Sleep 1s
 Down
-Sleep 800ms
+Sleep 1s
 Up
-Sleep 800ms
+Sleep 1s
 Type "q"
-Sleep 2s
 
-# Final sequence
+# 6. Final display
 Sleep 10s
