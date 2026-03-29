@@ -1,19 +1,7 @@
-# Build outputs
-dist/
-*.exe
-
-# OS files
+gyanesh-help.exe
+gyanesh-help
+macros.txt
+.venv/
+node_modules/
 .DS_Store
-Thumbs.db
-
-# Go
-vendor/
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# Config (user-specific)
-*.db
+exports/
