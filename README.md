@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="C:\Users\mailg\.gemini\antigravity\brain\9260aef7-b93c-4e47-873e-c27e43460e31\cue_hero_banner_1774850266139.png" alt="Cue Hero Banner" width="1200" style="border-radius: 12px; margin-bottom: 20px;">
+  <img src="Assets/Cue.png" alt="Cue Hero Banner" width="1200" style="border-radius: 12px; margin-bottom: 20px;">
 
   <h1>✨ Cue ✨</h1>
   <h3><i>Makes the terminal feel like it already knows what you need.</i></h3>
@@ -24,6 +24,9 @@
 <div align="center">
   <h2>📺 Welcome to v2.0</h2>
   <img src="docs/assets/onboarding_demo.gif" alt="Onboarding Demo" width="900" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+  <br><br>
+  <h3>🏪 Environment Store Management</h3>
+  <img src="Assets/store_demo.gif" alt="Store Demo" width="900" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
 </div>
 
 ---
