@@ -53,12 +53,19 @@ Modern application development requires immense cognitive overhead. Should you u
 The CLI distributes as a self-contained, statically linked fat binary. No complex Node/Python/Ruby dependencies are strictly required to run it!
 
 <details>
-<summary><b>🐧 Linux / macOS</b></summary>
+<summary><b>🐧 Linux / macOS (Incl. Arch Linux Support)</b></summary>
 <br>
 
+**One-liner Install (Ubuntu/Debian/Arch/macOS):**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/GyaneshSamanta/cue/main/scripts/install.sh | bash
 ```
+
+**Arch Linux Specifics:**
+The `install.sh` script works directly on Arch. We recommend having `base-devel`, `curl`, and `sudo` ready. 
+
+> [!TIP]
+> **AUR Packaging:** AUR support (`cue-bin`) is currently in development. For now, the direct install is the recommended path.
 
 </details>
 
