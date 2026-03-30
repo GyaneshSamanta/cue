@@ -60,6 +60,8 @@ The CLI distributes as a self-contained, statically linked fat binary. No comple
 curl -fsSL https://raw.githubusercontent.com/GyaneshSamanta/cue/main/scripts/install.sh | bash
 ```
 
+> **Note for Arch Linux Users:** The `install.sh` script is fully compatible with Arch Linux. For optimal compatibility with future AUR packaging and dependencies, ensure you have the base development tools installed via `sudo pacman -S base-devel`.
+
 </details>
 
 <details>
