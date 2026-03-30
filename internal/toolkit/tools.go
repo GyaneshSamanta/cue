@@ -8,8 +8,8 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/adapter"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/adapter"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 func init() {

@@ -8,10 +8,10 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/adapter"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/config"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/toolkit"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/adapter"
+	"github.com/GyaneshSamanta/cue/internal/config"
+	"github.com/GyaneshSamanta/cue/internal/toolkit"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 // Mode is the Claude Code installation mode.
@@ -151,7 +151,7 @@ func InstallLocalMode(a adapter.OSAdapter) error {
 	saveMode(ModeLocal)
 	fmt.Println()
 	ui.PrintSuccess("Claude Code (local mode) setup complete!")
-	fmt.Println("  Start the proxy: litellm --config ~/.gyanesh-help/litellm-config.yaml")
+	fmt.Println("  Start the proxy: litellm --config ~/.cue/litellm-config.yaml")
 	fmt.Println("  Then use: claude \"your prompt\"")
 	return nil
 }

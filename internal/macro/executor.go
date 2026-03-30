@@ -6,8 +6,8 @@ import (
 	"os/exec"
 	"runtime"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/config"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/config"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 // Execute runs a named macro after handling safety checks.
@@ -20,7 +20,7 @@ func Execute(name string, flags map[string]string) error {
 		if closest != "" {
 			msg += fmt.Sprintf(" Did you mean '%s'?", closest)
 		}
-		msg += " Run 'gyanesh-help explain --list' to see all."
+		msg += " Run 'cue explain --list' to see all."
 		return fmt.Errorf("%s", msg)
 	}
 

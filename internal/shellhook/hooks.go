@@ -7,11 +7,11 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
-const hookMarkerStart = "# >>> gyanesh-help shell hooks >>>"
-const hookMarkerEnd = "# <<< gyanesh-help shell hooks <<<"
+const hookMarkerStart = "# >>> cue shell hooks >>>"
+const hookMarkerEnd = "# <<< cue shell hooks <<<"
 
 // Install adds shell hooks to the user's shell config.
 func Install(shell string) error {
@@ -31,7 +31,7 @@ func Install(shell string) error {
 
 	// Check if already installed
 	if strings.Contains(content, hookMarkerStart) {
-		ui.PrintInfo("Shell hooks already installed. Use 'gyanesh-help shell-hook uninstall' to remove first.")
+		ui.PrintInfo("Shell hooks already installed. Use 'cue shell-hook uninstall' to remove first.")
 		return nil
 	}
 
@@ -108,7 +108,7 @@ func generateHooks(shell string) string {
 	switch shell {
 	case "zsh", "bash":
 		return `# Auto-activate virtual environments on cd
-_gyanesh_help_chpwd() {
+_cue_chpwd() {
   # Auto-activate .venv/venv
   if [ -d ".venv" ] && [ -f ".venv/bin/activate" ]; then
     source .venv/bin/activate 2>/dev/null
@@ -116,62 +116,62 @@ _gyanesh_help_chpwd() {
     source venv/bin/activate 2>/dev/null
   fi
 
-  # Auto-switch project tag from .gyanesh-help config
-  if [ -f ".gyanesh-help" ]; then
-    local tag=$(grep '^tag' .gyanesh-help 2>/dev/null | head -1 | sed 's/.*= *"\(.*\)"/\1/')
+  # Auto-switch project tag from .cue config
+  if [ -f ".cue" ]; then
+    local tag=$(grep '^tag' .cue 2>/dev/null | head -1 | sed 's/.*= *"\(.*\)"/\1/')
     if [ -n "$tag" ]; then
-      gyanesh-help tag set "$tag" 2>/dev/null
+      cue tag set "$tag" 2>/dev/null
     fi
   fi
 
   # Stack detection hint
   if [ -f "package.json" ] && ! command -v node &>/dev/null; then
-    echo "  ℹ  Node.js project detected but node is not installed. Try: gyanesh-help toolkit install node"
+    echo "  ℹ  Node.js project detected but node is not installed. Try: cue toolkit install node"
   fi
   if [ -f "requirements.txt" ] && ! command -v python3 &>/dev/null; then
-    echo "  ℹ  Python project detected but python3 is not installed. Try: gyanesh-help toolkit install python"
+    echo "  ℹ  Python project detected but python3 is not installed. Try: cue toolkit install python"
   fi
   if [ -f "Cargo.toml" ] && ! command -v cargo &>/dev/null; then
-    echo "  ℹ  Rust project detected but cargo is not installed. Try: gyanesh-help toolkit install rust"
+    echo "  ℹ  Rust project detected but cargo is not installed. Try: cue toolkit install rust"
   fi
   if [ -f "go.mod" ] && ! command -v go &>/dev/null; then
-    echo "  ℹ  Go project detected but go is not installed. Try: gyanesh-help toolkit install go"
+    echo "  ℹ  Go project detected but go is not installed. Try: cue toolkit install go"
   fi
 }
 
 if [ -n "$ZSH_VERSION" ]; then
   autoload -U add-zsh-hook
-  add-zsh-hook chpwd _gyanesh_help_chpwd
+  add-zsh-hook chpwd _cue_chpwd
 else
-  cd() { builtin cd "$@" && _gyanesh_help_chpwd; }
+  cd() { builtin cd "$@" && _cue_chpwd; }
 fi
 
 # Run on shell start for current directory
-_gyanesh_help_chpwd`
+_cue_chpwd`
 
 	case "fish":
 		return `# Auto-activate virtual environments on cd
-function _gyanesh_help_on_cd --on-variable PWD
+function _cue_on_cd --on-variable PWD
   if test -d .venv; and test -f .venv/bin/activate.fish
     source .venv/bin/activate.fish 2>/dev/null
   else if test -d venv; and test -f venv/bin/activate.fish
     source venv/bin/activate.fish 2>/dev/null
   end
 
-  if test -f .gyanesh-help
-    set -l tag (grep '^tag' .gyanesh-help 2>/dev/null | head -1 | sed 's/.*= *"\(.*\)"/\1/')
+  if test -f .cue
+    set -l tag (grep '^tag' .cue 2>/dev/null | head -1 | sed 's/.*= *"\(.*\)"/\1/')
     if test -n "$tag"
-      gyanesh-help tag set "$tag" 2>/dev/null
+      cue tag set "$tag" 2>/dev/null
     end
   end
 end`
 
 	case "powershell":
-		return `# Auto-switch project tag from .gyanesh-help config
+		return `# Auto-switch project tag from .cue config
 function Invoke-GyaneshHelpHook {
-  if (Test-Path ".gyanesh-help") {
-    $tag = (Get-Content ".gyanesh-help" | Select-String '^tag' | ForEach-Object { $_ -replace '.*= *"(.*)"', '$1' })
-    if ($tag) { gyanesh-help tag set $tag 2>$null }
+  if (Test-Path ".cue") {
+    $tag = (Get-Content ".cue" | Select-String '^tag' | ForEach-Object { $_ -replace '.*= *"(.*)"', '$1' })
+    if ($tag) { cue tag set $tag 2>$null }
   }
   if (Test-Path ".venv\Scripts\Activate.ps1") {
     & .venv\Scripts\Activate.ps1

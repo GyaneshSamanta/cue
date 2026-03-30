@@ -7,8 +7,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/store"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/store"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 var diffCmd = &cobra.Command{
@@ -58,7 +58,7 @@ Shows present, missing, and outdated components with actionable fix commands.`,
 			ui.PrintSuccess(fmt.Sprintf("All %d components present! Environment fully matches %s store.", present, stackName))
 		} else {
 			fmt.Printf("  %d present, %d missing, %d outdated\n\n", present, missing, outdated)
-			ui.PrintInfo(fmt.Sprintf("Run 'gyanesh-help store install %s --missing-only' to fill the gaps.", stackName))
+			ui.PrintInfo(fmt.Sprintf("Run 'cue store install %s --missing-only' to fill the gaps.", stackName))
 		}
 	},
 }

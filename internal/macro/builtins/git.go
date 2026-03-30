@@ -1,6 +1,6 @@
 package builtins
 
-import "github.com/GyaneshSamanta/gyanesh-help/internal/macro"
+import "github.com/GyaneshSamanta/cue/internal/macro"
 
 func registerGitMacros() {
 	reg(&macro.Macro{
@@ -35,12 +35,12 @@ and staged files are untouched. This cannot be undone.
 	reg(&macro.Macro{
 		Name: "git-save", Category: "git",
 		Description: "Stash current changes with a message",
-		Commands:    []macro.Step{{OS: "all", Command: `git stash push -m "gyanesh-help save"`}},
+		Commands:    []macro.Step{{OS: "all", Command: `git stash push -m "cue save"`}},
 		Explanation: `
 ✔ Done. Your working directory changes were stashed.
 ─────────────────────────────────────────────────────
 Your changes are safely stored. Retrieve them with:
-  gyanesh-help git-unsave
+  cue git-unsave
 or: git stash pop
 ─────────────────────────────────────────────────────`,
 		BuiltIn: true,
@@ -67,7 +67,7 @@ If there were conflicts, resolve them manually.
 ✔ Done. All current changes were added to your last commit.
 ─────────────────────────────────────────────────────
 The commit message stays the same. If you already pushed
-this commit, you'll need: gyanesh-help git-oops-push
+this commit, you'll need: cue git-oops-push
 ─────────────────────────────────────────────────────`,
 		BuiltIn: true,
 	})

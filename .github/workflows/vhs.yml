@@ -22,10 +22,10 @@ jobs:
         with:
           go-version: '1.23'
 
-      - name: Build gyanesh-help CLI
+      - name: Build cue CLI
         run: |
-          go build -ldflags="-s -w" -o gyanesh-help .
-          sudo mv gyanesh-help /usr/local/bin/
+          go build -ldflags="-s -w" -o cue .
+          sudo mv cue /usr/local/bin/
 
       - name: Prepare assets directory
         run: mkdir -p docs/assets

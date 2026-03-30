@@ -8,9 +8,9 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/history"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/tui"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/history"
+	"github.com/GyaneshSamanta/cue/internal/tui"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 var historyCmd = &cobra.Command{

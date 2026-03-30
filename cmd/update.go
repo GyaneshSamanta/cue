@@ -5,14 +5,14 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/updater"
+	"github.com/GyaneshSamanta/cue/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/updater"
 )
 
 var updateCmd = &cobra.Command{
 	Use:   "update",
-	Short: "Check for and install gyanesh-help updates",
-	Long: `Check for the latest version of gyanesh-help on GitHub and optionally
+	Short: "Check for and install cue updates",
+	Long: `Check for the latest version of cue on GitHub and optionally
 download and install it. The current binary is backed up before replacement.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		checkOnly, _ := cmd.Flags().GetBool("check")
@@ -49,7 +49,7 @@ download and install it. The current binary is backed up before replacement.`,
 		}
 
 		if checkOnly {
-			ui.PrintInfo(fmt.Sprintf("Run 'gyanesh-help update' to install %s", release.TagName))
+			ui.PrintInfo(fmt.Sprintf("Run 'cue update' to install %s", release.TagName))
 			return
 		}
 

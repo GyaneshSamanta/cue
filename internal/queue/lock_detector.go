@@ -5,7 +5,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/adapter"
+	"github.com/GyaneshSamanta/cue/internal/adapter"
 )
 
 // LockDetector checks for active package manager locks.

@@ -5,8 +5,8 @@ import (
 	"os/exec"
 	"time"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/adapter"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/adapter"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 // Backup captures workspace and pushes to GitHub.
@@ -39,7 +39,7 @@ func pushToGitHub(srcDir, token, repoName string) (string, error) {
 		return "", err
 	}
 
-	commitMsg := fmt.Sprintf("gyanesh-help backup: %s", time.Now().UTC().Format(time.RFC3339))
+	commitMsg := fmt.Sprintf("cue backup: %s", time.Now().UTC().Format(time.RFC3339))
 	if err := runGit(srcDir, "commit", "-m", commitMsg); err != nil {
 		return "", err
 	}

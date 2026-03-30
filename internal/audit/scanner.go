@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 // RunFull performs a complete security audit.
@@ -95,7 +95,7 @@ func AuditSSH() {
 
 	if !foundAny {
 		fmt.Println("  ✗  No SSH keys found")
-		ui.PrintInfo("  Generate one: gyanesh-help ssh-keygen-github")
+		ui.PrintInfo("  Generate one: cue ssh-keygen-github")
 	}
 }
 

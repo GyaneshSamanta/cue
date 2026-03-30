@@ -1,5 +1,5 @@
 # Technical Specification Document
-## `gyanesh-help` — Cross-Platform CLI Developer Utility
+## `cue` — Cross-Platform CLI Developer Utility
 **Version:** 1.0-draft  
 **Status:** For Engineering Review  
 **Author:** Gyanesh Samanta 
@@ -34,15 +34,15 @@
 ```
 ┌──────────────────────────────────────────────────────────────────────────┐
 │                         USER TERMINAL                                    │
-│   $ gyanesh-help store install mern                                      │
+│   $ cue store install mern                                      │
 └────────────────────────────────┬─────────────────────────────────────────┘
                                  │ argv
                                  ▼
 ┌──────────────────────────────────────────────────────────────────────────┐
 │  ENTRY POINT  (main.go / main.rs / antigravity entrypoint)               │
 │  • Parse raw argv                                                         │
-│  • Load ~/.gyanesh-help/config.toml                                      │
-│  • Hydrate session state from ~/.gyanesh-help/session.json               │
+│  • Load ~/.cue/config.toml                                      │
+│  • Hydrate session state from ~/.cue/session.json               │
 └──────────────────────────────────┬───────────────────────────────────────┘
                                    │
                                    ▼
@@ -107,7 +107,7 @@
 ### 1.3 Directory Layout (Source)
 
 ```
-gyanesh-help/
+cue/
 ├── main.go                     # Entrypoint
 ├── cmd/                        # Cobra command definitions
 │   ├── root.go
@@ -203,7 +203,7 @@ type OSAdapter interface {
 
     // System info
     HomeDir() string
-    ConfigDir() string                          // ~/.gyanesh-help on Unix, %APPDATA%\gyanesh-help on Windows
+    ConfigDir() string                          // ~/.cue on Unix, %APPDATA%\cue on Windows
     OSName() string                             // "linux", "darwin", "windows"
     OSDistro() string                           // "ubuntu", "fedora", "arch", "" on non-Linux
     HasGPU() bool                               // Checks for nvidia-smi or equivalent
@@ -274,7 +274,7 @@ var pacmanLockPaths = []string{
 ### 3.1 Directory Structure (Runtime)
 
 ```
-~/.gyanesh-help/
+~/.cue/
 ├── config.toml           # User configuration
 ├── history.db            # SQLite command history
 ├── macros.toml           # User-defined custom macros
@@ -306,7 +306,7 @@ probe_interval_secs = 10
 [history]
 max_entries = 50000                  # Rotate after this many rows
 default_display_count = 20
-export_dir = "~/.gyanesh-help/exports"
+export_dir = "~/.cue/exports"
 
 [workspace]
 github_repo_name = "dev-workspace-backup"
@@ -448,7 +448,7 @@ added_at = "2026-03-28T10:00:00Z"
 ### 4.1 Flow Diagram
 
 ```
-gyanesh-help install vim
+cue install vim
          │
          ▼
    LockDetector.Check()
@@ -682,7 +682,7 @@ func (jc *JobController) ManagedRun(cmd *exec.Cmd, jobID string) error {
             }
 
         case <-sigCh:
-            ui.PrintInfo("[PAUSED] Manual pause. Run 'gyanesh-help resume' to continue.")
+            ui.PrintInfo("[PAUSED] Manual pause. Run 'cue resume' to continue.")
             jc.adapter.SuspendProcess(pid)
             job.Status = "paused"
             job.PauseReason = "manual"
@@ -809,7 +809,7 @@ func (nm *NetworkMonitor) probe() bool {
 
 ### 6.1 Macro Registry
 
-Macros are defined in Go as structs, compiled into the binary. User-defined macros in `~/.gyanesh-help/macros.toml` are loaded at startup and merged into the registry.
+Macros are defined in Go as structs, compiled into the binary. User-defined macros in `~/.cue/macros.toml` are loaded at startup and merged into the registry.
 
 ```go
 // internal/macro/registry.go
@@ -888,7 +888,7 @@ and still staged. The commit message is gone, but your work is not.
 You can re-commit when ready with:  git commit -m "your message"
 
 This rewrites local history only. If you had already pushed this
-commit, you will need to force-push (use 'gyanesh-help git-oops-push').
+commit, you will need to force-push (use 'cue git-oops-push').
 ─────────────────────────────────────────────────────────────────`,
         BuiltIn: true,
     })
@@ -927,7 +927,7 @@ To clean remote branches too, use: git remote prune origin
 func Execute(name string, flags map[string]string, adapter adapter.OSAdapter) error {
     m, ok := Registry[name]
     if !ok {
-        return fmt.Errorf("unknown macro: %s. Run 'gyanesh-help explain --list' to see all.", name)
+        return fmt.Errorf("unknown macro: %s. Run 'cue explain --list' to see all.", name)
     }
 
     // Dangerous action gate
@@ -1126,7 +1126,7 @@ func (s *MERNStack) Components() []Component {
 
 ### 8.1 Write Path
 
-Every command issued through `gyanesh-help` passes through a **middleware wrapper** that records a history entry after execution.
+Every command issued through `cue` passes through a **middleware wrapper** that records a history entry after execution.
 
 ```go
 // internal/history/writer.go
@@ -1296,7 +1296,7 @@ func PushToGitHub(srcDir string, token string, repoName string) (string, error) 
     copyFile(builtinGitignorePath(), filepath.Join(srcDir, ".gitignore"))
     runGit(srcDir, "add", ".")
     runGit(srcDir, "commit", "-m",
-        fmt.Sprintf("gyanesh-help backup: %s", time.Now().UTC().Format(time.RFC3339)))
+        fmt.Sprintf("cue backup: %s", time.Now().UTC().Format(time.RFC3339)))
     runGit(srcDir, "remote", "add", "origin", *repo.CloneURL)
     runGit(srcDir, "push", "--force", "origin", "main")
 
@@ -1392,11 +1392,11 @@ Before attempting any operation requiring elevation, the tool probes whether it 
 
 ```
 ✖ This operation requires administrator/sudo access.
-  On Linux/macOS: run with 'sudo gyanesh-help store install lamp'
+  On Linux/macOS: run with 'sudo cue store install lamp'
   On Windows:     re-open this terminal as Administrator
   
   If you do not have admin rights on this machine, ask your
-  IT administrator, or check 'gyanesh-help store preview lamp'
+  IT administrator, or check 'cue store preview lamp'
   to see what would be installed.
 ```
 
@@ -1451,8 +1451,8 @@ func PathAdd(dir string, adapter adapter.OSAdapter) error {
 ### 11.1 Config Loading Priority (highest to lowest)
 
 1. **CLI flags** — e.g., `--poll-interval 10` overrides everything.
-2. **Project-local config** — `.gyanesh-help.toml` in the current working directory.
-3. **User config** — `~/.gyanesh-help/config.toml`.
+2. **Project-local config** — `.cue.toml` in the current working directory.
+3. **User config** — `~/.cue/config.toml`.
 4. **Built-in defaults** — compiled into the binary.
 
 ```go
@@ -1470,7 +1470,7 @@ func Load(args []string) (*Config, error) {
     }
 
     // Layer 2: Project-local config
-    localCfg := ".gyanesh-help.toml"
+    localCfg := ".cue.toml"
     if _, err := os.Stat(localCfg); err == nil {
         if _, err := toml.DecodeFile(localCfg, cfg); err != nil {
             return nil, fmt.Errorf("invalid project config: %w", err)
@@ -1491,9 +1491,9 @@ func Load(args []string) (*Config, error) {
 | Edge Case | Handling Strategy |
 |-----------|------------------|
 | **Stale lock file** (package manager crashed, lock remains) | `flock()` test proves lock is not actively held; proceed without queuing. On Windows, check if holding PID is still alive. |
-| **Lock held by the user themselves** (two tabs) | Detect by checking if the locking PID is owned by the same user. Warn: `[INFO] You have another gyanesh-help install running in another terminal. Queuing...` |
+| **Lock held by the user themselves** (two tabs) | Detect by checking if the locking PID is owned by the same user. Warn: `[INFO] You have another cue install running in another terminal. Queuing...` |
 | **Lock wait timeout** | Print clear error, remove queue entry, suggest manual check: `sudo lsof /var/lib/dpkg/lock-frontend` |
-| **Lock acquired mid-poll** (TOCTOU race) | The underlying package manager handles this; `gyanesh-help` does not attempt to "steal" locks. If the second install fails with a lock error, re-queue automatically (max 1 auto-requeue). |
+| **Lock acquired mid-poll** (TOCTOU race) | The underlying package manager handles this; `cue` does not attempt to "steal" locks. If the second install fails with a lock error, re-queue automatically (max 1 auto-requeue). |
 | **Multiple commands queued simultaneously** | FIFO queue; sequential execution. Commands are never run in parallel through the queue. |
 
 ### 12.2 Pause/Resume Edge Cases
@@ -1501,8 +1501,8 @@ func Load(args []string) (*Config, error) {
 | Edge Case | Handling Strategy |
 |-----------|------------------|
 | **Package manager doesn't support mid-download resume** (e.g., old pip) | Detect by checking if partial download files exist on resume; restart download; warn user: `[WARN] pip does not support partial resume. Restarting download from cached index.` |
-| **Process exits during network outage** (package manager self-terminates) | `cmd.Wait()` returns; record exit code; report failure; suggest `gyanesh-help store install <stack> --resume` which skips already-installed components. |
-| **SIGKILL received while paused** (system shutdown) | `jobs.json` persists the paused state. On next startup, `gyanesh-help` prints: `[INFO] 1 paused job detected from previous session. Run 'gyanesh-help resume' to continue.` |
+| **Process exits during network outage** (package manager self-terminates) | `cmd.Wait()` returns; record exit code; report failure; suggest `cue store install <stack> --resume` which skips already-installed components. |
+| **SIGKILL received while paused** (system shutdown) | `jobs.json` persists the paused state. On next startup, `cue` prints: `[INFO] 1 paused job detected from previous session. Run 'cue resume' to continue.` |
 | **Process PID recycled between sessions** | On resume, validate PID against process name before sending signals. If PID is gone, mark job as `orphaned` and surface to user. |
 | **Insufficient permissions to SIGSTOP** | Log warning; fall back to killing child processes and offering a re-run. |
 | **VPN-connected machine** | VPN routes traffic through a tunnel; ICMP to 1.1.1.1 may fail even with VPN up. Fallback TCP probe to 8.8.8.8:53 handles this. Users can set `probe_host` in config to a VPN-internal host for best accuracy. |
@@ -1523,20 +1523,20 @@ func Load(args []string) (*Config, error) {
 
 | Edge Case | Handling Strategy |
 |-----------|------------------|
-| **GitHub PAT expired or revoked** | API call returns 401; display: `[ERROR] GitHub token is invalid or expired. Re-authenticate with 'gyanesh-help workspace auth --token <new-PAT>'.` |
+| **GitHub PAT expired or revoked** | API call returns 401; display: `[ERROR] GitHub token is invalid or expired. Re-authenticate with 'cue workspace auth --token <new-PAT>'.` |
 | **history.db too large for Git** | Warn if `> 50 MB`. Offer to export as CSV and include the CSV instead. |
-| **Shell config contains plaintext secrets** | Pattern-scan for common secret patterns (`export AWS_SECRET`, `GITHUB_TOKEN=`, API key regexes) before committing. Warn and redact (replace with `# REDACTED by gyanesh-help`) if found. |
+| **Shell config contains plaintext secrets** | Pattern-scan for common secret patterns (`export AWS_SECRET`, `GITHUB_TOKEN=`, API key regexes) before committing. Warn and redact (replace with `# REDACTED by cue`) if found. |
 | **Restore on a different OS** | Manifest records source OS. If restoring Linux backup on macOS, warn and skip Linux-only shell files; attempt equivalent macOS installs where possible. |
-| **No git installed on new machine** | `gyanesh-help workspace restore` requires git to clone the repo. Provide the OS-appropriate install command before failing. |
+| **No git installed on new machine** | `cue workspace restore` requires git to clone the repo. Provide the OS-appropriate install command before failing. |
 
 ### 12.5 General CLI Edge Cases
 
 | Edge Case | Handling Strategy |
 |-----------|------------------|
 | **Unknown sub-command** | Show closest match using Levenshtein distance: `Unknown command 'stor'. Did you mean 'store'?` |
-| **Concurrent `gyanesh-help` invocations** | SQLite handles concurrent writes via WAL mode. `jobs.json` and `queue.json` use file-level locking via `flock`. |
-| **Filesystem permissions on config dir** | If `~/.gyanesh-help/` cannot be created or written to, fail clearly and explain the problem. Never silently swallow write errors. |
-| **Missing git in macro context** | Before running any `git-*` macro, check that `git` is on PATH. If not: `[ERROR] git not found. Install it with 'gyanesh-help install git'.` |
+| **Concurrent `cue` invocations** | SQLite handles concurrent writes via WAL mode. `jobs.json` and `queue.json` use file-level locking via `flock`. |
+| **Filesystem permissions on config dir** | If `~/.cue/` cannot be created or written to, fail clearly and explain the problem. Never silently swallow write errors. |
+| **Missing git in macro context** | Before running any `git-*` macro, check that `git` is on PATH. If not: `[ERROR] git not found. Install it with 'cue install git'.` |
 | **Running inside a Docker container** | Many store components (Docker itself, desktop apps) will fail inside a container. Detect via `/.dockerenv` existence and warn proactively. |
 
 ---
@@ -1548,12 +1548,12 @@ func Load(args []string) (*Config, error) {
 ```yaml
 # Antigravityfile
 
-project: gyanesh-help
+project: cue
 version: 1.0.0
 
 build:
   main: ./main.go
-  output: dist/gyanesh-help
+  output: dist/cue
   ldflags:
     - "-s -w"                           # Strip debug symbols; minimise binary size
     - "-X main.Version={{.Version}}"
@@ -1576,7 +1576,7 @@ tasks:
     command: golangci-lint run
   size-check:
     command: |
-      ls -lh dist/gyanesh-help-linux-amd64
+      ls -lh dist/cue-linux-amd64
       echo "Must be under 15 MB"
   release:
     depends: [test, lint, build, size-check]
@@ -1589,16 +1589,16 @@ tasks:
 |----------|--------|---------|
 | **Linux/macOS** | Shell script | `curl -fsSL https://get.gyanesh.help \| bash` |
 | **Windows** | PowerShell | `iwr https://get.gyanesh.help/win \| iex` |
-| **Homebrew** | Tap | `brew install gyanesh-help/tap/gyanesh-help` |
+| **Homebrew** | Tap | `brew install cue/tap/cue` |
 | **Manual** | GitHub Releases | Download pre-built binary from GitHub Releases page |
-| **Go install** | Go toolchain | `go install github.com/gyanesh-help/gyanesh-help@latest` |
+| **Go install** | Go toolchain | `go install github.com/cue/cue@latest` |
 
 The install script:
 1. Detects OS and architecture.
 2. Downloads the correct pre-built binary from GitHub Releases.
 3. Verifies the SHA256 checksum.
-4. Places the binary in `/usr/local/bin` (Linux/macOS) or `%LOCALAPPDATA%\gyanesh-help\` (Windows) and adds to PATH.
-5. Creates `~/.gyanesh-help/` with default `config.toml`.
+4. Places the binary in `/usr/local/bin` (Linux/macOS) or `%LOCALAPPDATA%\cue\` (Windows) and adds to PATH.
+5. Creates `~/.cue/` with default `config.toml`.
 
 ### 13.3 Binary Size Budget
 
@@ -1655,7 +1655,7 @@ The install script:
 ### 15.1 Secret Storage
 
 - GitHub PAT is stored using the OS native keyring (`go-keyring`): macOS Keychain, Windows Credential Manager, Linux Secret Service (libsecret).
-- **Never** stored in plaintext in `config.toml` or any file in `~/.gyanesh-help/`.
+- **Never** stored in plaintext in `config.toml` or any file in `~/.cue/`.
 - Token is retrieved from keyring only at the moment of use; never logged or printed.
 
 ### 15.2 Install Script Safety
@@ -1667,7 +1667,7 @@ The install script:
 ### 15.3 Privilege Escalation Safety
 
 - `sudo` / UAC elevation is invoked only for specific, listed operations (package installs, `/etc/hosts` edit, service management).
-- `gyanesh-help` never stores or caches sudo credentials.
+- `cue` never stores or caches sudo credentials.
 - Every operation requiring elevation prints the exact command that will be run with elevated permissions before requesting elevation.
 
 ### 15.4 Child Process Safety
@@ -1683,7 +1683,7 @@ The install script:
   - Package manager installs (controlled by the user's invocation).
   - GitHub API calls (only when `workspace backup/restore` is explicitly invoked).
   - Network probes to 1.1.1.1 / 8.8.8.8 (only during active managed installations).
-- All three categories are transparent to the user and documented in `gyanesh-help --privacy`.
+- All three categories are transparent to the user and documented in `cue --privacy`.
 
 ---
 

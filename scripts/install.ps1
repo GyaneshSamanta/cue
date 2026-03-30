@@ -1,13 +1,13 @@
-# gyanesh-help installer for Windows
-# Usage: iwr https://raw.githubusercontent.com/GyaneshSamanta/gyanesh-help/main/scripts/install.ps1 | iex
+# cue installer for Windows
+# Usage: iwr https://raw.githubusercontent.com/GyaneshSamanta/cue/main/scripts/install.ps1 | iex
 # Or:    .\scripts\install.ps1
 
 $ErrorActionPreference = "Stop"
 
-$Repo = "GyaneshSamanta/gyanesh-help"
-$BinaryName = "gyanesh-help.exe"
-$InstallDir = "$env:LOCALAPPDATA\gyanesh-help"
-$ConfigDir = "$env:APPDATA\gyanesh-help"
+$Repo = "GyaneshSamanta/cue"
+$BinaryName = "cue.exe"
+$InstallDir = "$env:LOCALAPPDATA\cue"
+$ConfigDir = "$env:APPDATA\cue"
 
 function Write-Step($msg)  { Write-Host "▸ $msg" -ForegroundColor Cyan }
 function Write-Ok($msg)    { Write-Host "✔ $msg" -ForegroundColor Green }
@@ -17,7 +17,7 @@ function Write-Err($msg)   { Write-Host "✖ $msg" -ForegroundColor Red }
 # Banner
 Write-Host ""
 Write-Host "  ╔══════════════════════════════════════╗" -ForegroundColor Magenta
-Write-Host "  ║       gyanesh-help installer         ║" -ForegroundColor Magenta
+Write-Host "  ║       cue installer         ║" -ForegroundColor Magenta
 Write-Host "  ║   Cross-Platform CLI Dev Utility     ║" -ForegroundColor Magenta
 Write-Host "  ╚══════════════════════════════════════╝" -ForegroundColor Magenta
 Write-Host ""
@@ -38,11 +38,11 @@ try {
 }
 
 # Download
-$FileName = "gyanesh-help-windows-$Arch.exe"
+$FileName = "cue-windows-$Arch.exe"
 $Url = "https://github.com/$Repo/releases/download/v$Version/$FileName"
 $TempFile = Join-Path $env:TEMP $BinaryName
 
-Write-Step "Downloading gyanesh-help v$Version..."
+Write-Step "Downloading cue v$Version..."
 try {
     Invoke-WebRequest -Uri $Url -OutFile $TempFile -UseBasicParsing
     Write-Ok "Downloaded successfully"
@@ -123,6 +123,6 @@ try {
 }
 
 Write-Host ""
-Write-Ok "Installation complete! Run 'gyanesh-help --help' to get started."
+Write-Ok "Installation complete! Run 'cue --help' to get started."
 Write-Host "  (You may need to open a new terminal for PATH changes to take effect)" -ForegroundColor Gray
 Write-Host ""

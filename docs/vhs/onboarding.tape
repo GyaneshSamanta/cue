@@ -1,14 +1,14 @@
 Output docs/assets/onboarding_demo.gif
-Set FontSize 24
-Set Width 1000
+Set FontSize 34
+Set Width 1200
 Set Height 900
-Set Padding 30
+Set Padding 40
 Set Theme "TokyoNight"
 Set TypingSpeed 100ms
 
 # Start the recording
 Sleep 1s
-Type "gyanesh-help onboarding"
+Type "cue onboarding"
 Enter
 
 # Wait for the welcome message

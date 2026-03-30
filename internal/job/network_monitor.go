@@ -5,7 +5,7 @@ import (
 	"net"
 	"time"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/config"
+	"github.com/GyaneshSamanta/cue/internal/config"
 )
 
 // NetworkEvent represents a network state change.

@@ -173,9 +173,9 @@ func (a *WindowsAdapter) HomeDir() string { return a.homeDir }
 
 func (a *WindowsAdapter) ConfigDir() string {
 	if appdata := os.Getenv("APPDATA"); appdata != "" {
-		return filepath.Join(appdata, "gyanesh-help")
+		return filepath.Join(appdata, "cue")
 	}
-	return filepath.Join(a.homeDir, ".gyanesh-help")
+	return filepath.Join(a.homeDir, ".cue")
 }
 
 func (a *WindowsAdapter) OSName() string   { return "windows" }

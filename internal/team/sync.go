@@ -6,8 +6,8 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/config"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/config"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 // TeamDir returns the team sync directory.
@@ -23,7 +23,7 @@ func Init() error {
 	os.MkdirAll(filepath.Join(dir, "config"), 0755)
 
 	ui.PrintSuccess("Team directory initialized at " + dir)
-	ui.PrintInfo("Use 'gyanesh-help team connect --repo <url>' to link a shared repo.")
+	ui.PrintInfo("Use 'cue team connect --repo <url>' to link a shared repo.")
 	return nil
 }
 
@@ -52,7 +52,7 @@ func Connect(repoURL string) error {
 func Sync(push bool) error {
 	repoDir := filepath.Join(TeamDir(), "repo")
 	if _, err := os.Stat(repoDir); err != nil {
-		return fmt.Errorf("no team repo connected. Run 'gyanesh-help team connect --repo <url>'")
+		return fmt.Errorf("no team repo connected. Run 'cue team connect --repo <url>'")
 	}
 
 	if push {

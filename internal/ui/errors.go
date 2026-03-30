@@ -73,11 +73,11 @@ func HandleError(err error) {
 func HandlePanic() {
 	if r := recover(); r != nil {
 		se := NewStructuRedError(
-			"gyanesh-help crashed unexpectedly",
+			"cue crashed unexpectedly",
 			fmt.Sprintf("An unexpected panic occurRed:\n  %v", r),
 			[]string{
-				"Please report this issue on GitHub at github.com/GyaneshSamanta/gyanesh-help/issues",
-				"Run 'gyanesh-help doctor' to check your environment state",
+				"Please report this issue on GitHub at github.com/GyaneshSamanta/cue/issues",
+				"Run 'cue doctor' to check your environment state",
 			},
 			nil,
 		)

@@ -8,8 +8,8 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/adapter"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/adapter"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 // Tool represents a single installable developer tool.
@@ -47,7 +47,7 @@ func List() []*Tool {
 func Install(name string, a adapter.OSAdapter, version string, dryRun bool) error {
 	t, ok := Registry[name]
 	if !ok {
-		return fmt.Errorf("unknown tool: %s. Run 'gyanesh-help toolkit list' to see available tools", name)
+		return fmt.Errorf("unknown tool: %s. Run 'cue toolkit list' to see available tools", name)
 	}
 
 	if dryRun {
@@ -95,7 +95,7 @@ func Remove(name string, a adapter.OSAdapter) error {
 		return fmt.Errorf("unknown tool: %s", name)
 	}
 	if t.RemoveFunc == nil {
-		return fmt.Errorf("%s does not support removal via gyanesh-help", name)
+		return fmt.Errorf("%s does not support removal via cue", name)
 	}
 	return t.RemoveFunc(a)
 }

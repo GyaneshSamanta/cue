@@ -6,8 +6,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/store"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/store"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 var onboardingCmd = &cobra.Command{
@@ -25,7 +25,7 @@ func init() {
 // RunOnboarding executes the rich welcome experience for new users.
 func RunOnboarding() {
 	fmt.Println()
-	ui.PrintHeader(" Welcome to Gyanesh-help v2.0 ")
+	ui.PrintHeader(" Welcome to Cue v2.0 ")
 	time.Sleep(500 * time.Millisecond)
 
 	ui.PrintInfo("Your terminal is about to get significantly more capable.")
@@ -40,7 +40,7 @@ func RunOnboarding() {
 	// 1. Environment Stores
 	ui.PrintHeader("Step 1/3: Environment Stores")
 	fmt.Println("Are you tired of configuring paths, installing package managers, and debugging binaries?")
-	fmt.Println("Gyanesh-help includes 'Stores'—verified, pre-configured software stacks (like 'devops' or 'mern').")
+	fmt.Println("Cue includes 'Stores'—verified, pre-configured software stacks (like 'devops' or 'mern').")
 	fmt.Println()
 	if ui.Confirm("Would you like to install a stack right now? (You can say no) [y/N] ") {
 		stack := pickStack()
@@ -53,7 +53,7 @@ func RunOnboarding() {
 			}
 		}
 	} else {
-		ui.PrintDim("➔ You can explore stores later by typing: gyanesh-help store")
+		ui.PrintDim("➔ You can explore stores later by typing: cue store")
 	}
 	fmt.Println()
 	time.Sleep(500 * time.Millisecond)
@@ -61,18 +61,18 @@ func RunOnboarding() {
 	// 2. Macro System
 	ui.PrintHeader("Step 2/3: The Macro System")
 	fmt.Println("Instead of memorizing long flags or looking up docker-compose syntax,")
-	fmt.Println("gyanesh-help replaces messy workflows with highly readable 'Macros'.")
+	fmt.Println("cue replaces messy workflows with highly readable 'Macros'.")
 	fmt.Println()
-	ui.PrintInfo("For example, run 'gyanesh-help go-mod-tidy-check' to automatically format and test Go code.")
-	ui.PrintInfo("Or 'gyanesh-help nuke-docker-volume' to instantly reclaim space safely.")
+	ui.PrintInfo("For example, run 'cue go-mod-tidy-check' to automatically format and test Go code.")
+	ui.PrintInfo("Or 'cue nuke-docker-volume' to instantly reclaim space safely.")
 	fmt.Println()
-	ui.PrintDim("➔ View all 25+ built-in macros at any time by typing: gyanesh-help macro list")
+	ui.PrintDim("➔ View all 25+ built-in macros at any time by typing: cue macro list")
 	fmt.Println()
 	time.Sleep(1000 * time.Millisecond)
 
 	// 3. AI & Claude Code Integration
 	ui.PrintHeader("Step 3/3: Claude Code & Local LLMs")
-	fmt.Println("Gyanesh-help orchestrates direct AI functionality directly in your CLI.")
+	fmt.Println("Cue orchestrates direct AI functionality directly in your CLI.")
 	fmt.Println("You can run Anthropic's 'Claude Code' in several modes:")
 	fmt.Println()
 	fmt.Println("  1. API Mode   (Directly connects to Claude over the cloud)")
@@ -80,13 +80,13 @@ func RunOnboarding() {
 	fmt.Println()
 	ui.PrintSuccess("Highlights: The Local Mode implementation is 100% FREE and private!")
 	fmt.Println()
-	ui.PrintDim("➔ Install AI capabilities anytime by typing: gyanesh-help claude-code install")
+	ui.PrintDim("➔ Install AI capabilities anytime by typing: cue claude-code install")
 	fmt.Println()
 	time.Sleep(1000 * time.Millisecond)
 
 	// Conclusion
 	ui.PrintHeader(" You are all set! ")
-	fmt.Println("You can replay this tutorial via: gyanesh-help onboarding")
+	fmt.Println("You can replay this tutorial via: cue onboarding")
 	fmt.Println()
 	fmt.Println(ui.C(ui.Bold, "Built with <3 by Gyanesh"))
 	fmt.Println("Support the project here: " + ui.C(ui.Blue, "https://buymeachai.ezee.li/GyaneshOnProduct"))

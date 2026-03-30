@@ -1,4 +1,4 @@
-module github.com/GyaneshSamanta/gyanesh-help
+module github.com/GyaneshSamanta/cue
 
 go 1.26.1
 

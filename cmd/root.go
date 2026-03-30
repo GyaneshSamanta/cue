@@ -8,14 +8,14 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/adapter"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/config"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/history"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/macro"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/store"
-	_ "github.com/GyaneshSamanta/gyanesh-help/internal/macro/builtins"
-	_ "github.com/GyaneshSamanta/gyanesh-help/internal/store/stacks"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/adapter"
+	"github.com/GyaneshSamanta/cue/internal/config"
+	"github.com/GyaneshSamanta/cue/internal/history"
+	"github.com/GyaneshSamanta/cue/internal/macro"
+	"github.com/GyaneshSamanta/cue/internal/store"
+	_ "github.com/GyaneshSamanta/cue/internal/macro/builtins"
+	_ "github.com/GyaneshSamanta/cue/internal/store/stacks"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 var (
@@ -35,9 +35,9 @@ func SetVersionInfo(v, b string) {
 }
 
 var rootCmd = &cobra.Command{
-	Use:   "gyanesh-help",
+	Use:   "cue",
 	Short: "Cross-platform CLI developer utility",
-	Long: `gyanesh-help — makes the terminal feel like it already knows what you need.
+	Long: `cue — makes the terminal feel like it already knows what you need.
 
   Queue management, pause/resume, semantic macros, environment stores,
   smart history, and workspace backup — all offline, all local.`,
@@ -114,9 +114,9 @@ func Execute() error {
 // statusCmd shows system status.
 var statusCmd = &cobra.Command{
 	Use:   "status",
-	Short: "Show gyanesh-help status and session info",
+	Short: "Show cue status and session info",
 	Run: func(cmd *cobra.Command, args []string) {
-		ui.PrintHeader("gyanesh-help Status")
+		ui.PrintHeader("cue Status")
 		fmt.Printf("  Version:      %s\n", appVersion)
 		fmt.Printf("  Build:        %s\n", buildDate)
 		fmt.Printf("  OS:           %s (%s)\n", osAdapter.OSName(), osAdapter.OSDistro())
@@ -155,12 +155,12 @@ var privacyCmd = &cobra.Command{
 	Short: "Show privacy and data usage information",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println(`
-gyanesh-help Privacy Statement
+cue Privacy Statement
 ══════════════════════════════════════════════════════
 
 Zero telemetry, analytics, or crash reporting.
 
-All data is stored locally in ~/.gyanesh-help/:
+All data is stored locally in ~/.cue/:
   • history.db  — your command history (SQLite, local only)
   • config.toml — your preferences
   • macros.toml — your custom macros
@@ -169,7 +169,7 @@ All data is stored locally in ~/.gyanesh-help/:
 
 Network calls only occur when YOU explicitly invoke:
   1. Package installations (via your OS package manager)
-  2. 'gyanesh-help workspace backup/restore' (GitHub API)
+  2. 'cue workspace backup/restore' (GitHub API)
   3. Network probes to 1.1.1.1/8.8.8.8 (only during
      managed installations to detect connectivity loss)
 

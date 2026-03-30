@@ -6,8 +6,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/project"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/project"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 var detectCmd = &cobra.Command{
@@ -26,7 +26,7 @@ var initProjectCmd = &cobra.Command{
 	Use:   "init [project-name]",
 	Short: "Scaffold a new project with stack-aware templates",
 	Long: `Create a new project directory with the right scaffolding, git init,
-.gitignore, and .gyanesh-help project configuration.`,
+.gitignore, and .cue project configuration.`,
 	Args: cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		name := args[0]

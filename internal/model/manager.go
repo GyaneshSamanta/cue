@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/config"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/config"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 // ListModels shows all Ollama models.

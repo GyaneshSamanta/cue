@@ -1,17 +1,17 @@
-# Gyanesh-help CLI v2.0
+# Cue CLI v2.0
 
 <div align="center">
   <h3>Makes the terminal feel like it already knows what you need.</h3>
   <p>Queue management, semantic macros, environment stores, smart history, and Claude Code integrations — all offline, all local.</p>
 
-  [![GitHub release (latest by date)](https://img.shields.io/github/v/release/GyaneshSamanta/Gyanesh-help?style=flat-square)](https://github.com/GyaneshSamanta/Gyanesh-help/releases/latest)
-  [![GitHub all releases](https://img.shields.io/github/downloads/GyaneshSamanta/Gyanesh-help/total?style=flat-square)](https://github.com/GyaneshSamanta/Gyanesh-help/releases)
-  [![GitHub repo size](https://img.shields.io/github/repo-size/GyaneshSamanta/Gyanesh-help?style=flat-square)](https://github.com/GyaneshSamanta/Gyanesh-help)
+  [![GitHub release (latest by date)](https://img.shields.io/github/v/release/GyaneshSamanta/Cue?style=flat-square)](https://github.com/GyaneshSamanta/cue/releases/latest)
+  [![GitHub all releases](https://img.shields.io/github/downloads/GyaneshSamanta/Cue/total?style=flat-square)](https://github.com/GyaneshSamanta/cue/releases)
+  [![GitHub repo size](https://img.shields.io/github/repo-size/GyaneshSamanta/Cue?style=flat-square)](https://github.com/GyaneshSamanta/cue)
 </div>
 
 ### 📺 Welcome to v2.0
 
-![Onboarding Demo](https://raw.githubusercontent.com/GyaneshSamanta/Gyanesh-help/main/docs/assets/onboarding_demo.gif)
+![Onboarding Demo](https://raw.githubusercontent.com/GyaneshSamanta/Cue/main/docs/assets/onboarding_demo.gif)
 
 ---
 
@@ -19,9 +19,9 @@
 
 Modern application development requires immense cognitive overhead. Should you use `npm audit fix` or `yarn upgrade`? Did you remember to append `--force-with-lease` on your git push? Which version of python is globally overriding your deep-learning virtual environment? 
 
-**Gyanesh-help** drastically reduces cognitive overhead. It intercepts complex needs and runs highly-optimized semantic macros, and it provisions complete declarative "Stores" to standardize how you build software. 
+**Cue** drastically reduces cognitive overhead. It intercepts complex needs and runs highly-optimized semantic macros, and it provisions complete declarative "Stores" to standardize how you build software. 
 
-### Why Use Gyanesh-help?
+### Why Use Cue?
 1. **Interactive TUI fallbacks:** Never check `--help` pages again. If you forget arguments, the system launches a graphical TUI menu directly in the terminal to guide you.
 2. **Environment Stores:** Declarative dependencies. Install a full `data-science` stack in a single command.
 3. **Claude Code Orchestration:** Run LLMs cleanly and directly against your file system with a single install flag.
@@ -37,21 +37,21 @@ The CLI distributes as a self-contained, statically linked fat binary. No Node/P
 
 **Linux / macOS**
 ```bash
-curl -fsSL https://raw.githubusercontent.com/GyaneshSamanta/gyanesh-help/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/GyaneshSamanta/cue/main/install.sh | bash
 ```
 
 **Windows** (PowerShell)
 ```powershell
-iwr https://raw.githubusercontent.com/GyaneshSamanta/gyanesh-help/main/install.ps1 -useb | iex
+iwr https://raw.githubusercontent.com/GyaneshSamanta/cue/main/install.ps1 -useb | iex
 ```
 
 #### First Run & Onboarding
 
-Upon your first successful execution of any `gyanesh-help` command, the CLI will automatically launch a dynamic **Onboarding Wizard**. This setup will gently introduce you to Environment Stores, the Macro Engine, and the LLM toolset. 
+Upon your first successful execution of any `cue` command, the CLI will automatically launch a dynamic **Onboarding Wizard**. This setup will gently introduce you to Environment Stores, the Macro Engine, and the LLM toolset. 
 
 You can replay this tutorial at any time by running:
 ```bash
-gyanesh-help onboarding
+cue onboarding
 ```
 
 ### 🧩 Environment Stores
@@ -60,7 +60,7 @@ Stop manually installing toolchains. Use our specialized environments, loaded dy
 
 **Install an Environment:**
 ```bash
-gyanesh-help store install mern
+cue store install mern
 ```
 
 **Explore the Specialized Tech Stacks:**
@@ -70,9 +70,9 @@ gyanesh-help store install mern
 
 ### 🤖 Generative AI: Claude Code Engine
 
-Gyanesh-help elegantly orchestrates Anthropic's Claude Code for you. 
+Cue elegantly orchestrates Anthropic's Claude Code for you. 
 ```bash
-gyanesh-help claude-code install
+cue claude-code install
 ```
 During installation, it offers multiple execution engines:
 1. **API Mode:** Sends code direct to the cloud. Best for reasoning.
@@ -108,7 +108,7 @@ Macros encapsulate best-practices and safety constraints into readable verbs. Fo
 | `ollama-list` | **AI** | `ollama list` | View all local neural networks and their memory footprint. |
 | `ollama-chat` | **AI** | `ollama run <model>` | Instantly drops into an optimized REPL terminal chat. |
 
-_To view these dynamically on your terminal, just type `gyanesh-help macro list`._
+_To view these dynamically on your terminal, just type `cue macro list`._
 
 ---
 
@@ -116,13 +116,14 @@ _To view these dynamically on your terminal, just type `gyanesh-help macro list`
 
 ### 🔒 Security Information & Trust
 
-When executing `gyanesh-help`, **zero telemetry or user data leaves your computer**. Everything operates deterministically over standard POSIX interfaces.
-- The `gyanesh-help audit` command locally analyzes your SSH structures (flagging deprecated RSA signatures over Ed25519 standardizations).
+When executing `cue`, **zero telemetry or user data leaves your computer**. Everything operates deterministically over standard POSIX interfaces.
+- The `cue audit` command locally analyzes your SSH structures (flagging deprecated RSA signatures over Ed25519 standardizations).
 - TUI menus securely scrub inputs locally before running.
-- LLM API keys (if using API Mode) are strictly vaulted in local JSON structures and are never logged internally in the `.gyanesh-help/exports` logs.
+- LLM API keys (if using API Mode) are strictly vaulted in local JSON structures and are never logged internally in the `.cue/exports` logs.
 
 ### Extending the System
 
+We welcome community contributions! Please view our [Contributing Guidelines](CONTRIBUTING.md) to understand the process.
 To build new stores or macros, please submit a Pull Request altering `internal/macro/builtins/*.go` or `internal/store/stacks/*.go`.
 
 **Standardization Rule:** 
@@ -134,7 +135,7 @@ se := ui.NewStructuredError(
     "Dependency 'rustc' dropped connection.",
     []string{
         "Check your internet connection",
-        "Run 'gyanesh-help store install rust' again",
+        "Run 'cue store install rust' again",
     },
     err, // Original underlying error trace
 )

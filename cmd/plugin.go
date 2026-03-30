@@ -3,8 +3,8 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/plugin"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/plugin"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 var pluginCmd = &cobra.Command{

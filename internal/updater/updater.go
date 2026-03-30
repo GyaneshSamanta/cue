@@ -11,13 +11,13 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/config"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/config"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 const (
 	repoOwner = "GyaneshSamanta"
-	repoName  = "gyanesh-help"
+	repoName  = "cue"
 	apiURL    = "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/releases/latest"
 )
 
@@ -71,7 +71,7 @@ func Update(release *Release, currentVersion string) error {
 		ext = ".zip"
 	}
 
-	assetName := fmt.Sprintf("gyanesh-help-%s-%s%s", osName, arch, ext)
+	assetName := fmt.Sprintf("cue-%s-%s%s", osName, arch, ext)
 	var downloadURL string
 	for _, asset := range release.Assets {
 		if asset.Name == assetName {
@@ -92,7 +92,7 @@ func Update(release *Release, currentVersion string) error {
 
 	backupDir := filepath.Join(config.ConfigDir(), "bin")
 	os.MkdirAll(backupDir, 0755)
-	backupPath := filepath.Join(backupDir, fmt.Sprintf("gyanesh-help-%s", currentVersion))
+	backupPath := filepath.Join(backupDir, fmt.Sprintf("cue-%s", currentVersion))
 
 	data, err := os.ReadFile(execPath)
 	if err == nil {
@@ -120,23 +120,23 @@ func Update(release *Release, currentVersion string) error {
 	// Extract and replace
 	if osName == "windows" {
 		// Use PowerShell to extract zip
-		extractDir := filepath.Join(os.TempDir(), "gyanesh-help-update")
+		extractDir := filepath.Join(os.TempDir(), "cue-update")
 		os.MkdirAll(extractDir, 0755)
 		exec.Command("powershell", "-Command",
 			fmt.Sprintf("Expand-Archive -Path '%s' -DestinationPath '%s' -Force", tmpFile, extractDir)).Run()
 
-		newBin := filepath.Join(extractDir, "gyanesh-help.exe")
+		newBin := filepath.Join(extractDir, "cue.exe")
 		if _, err := os.Stat(newBin); err == nil {
 			// Copy new binary (can't replace running exe on Windows directly)
 			ui.PrintWarning("On Windows, please replace the binary manually from: " + extractDir)
 		}
 	} else {
 		// Extract tar.gz
-		extractDir := filepath.Join(os.TempDir(), "gyanesh-help-update")
+		extractDir := filepath.Join(os.TempDir(), "cue-update")
 		os.MkdirAll(extractDir, 0755)
 		exec.Command("tar", "-xzf", tmpFile, "-C", extractDir).Run()
 
-		newBin := filepath.Join(extractDir, "gyanesh-help")
+		newBin := filepath.Join(extractDir, "cue")
 		if _, err := os.Stat(newBin); err == nil {
 			os.Rename(newBin, execPath)
 			os.Chmod(execPath, 0755)

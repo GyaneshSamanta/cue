@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/adapter"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/store"
+	"github.com/GyaneshSamanta/cue/internal/adapter"
+	"github.com/GyaneshSamanta/cue/internal/store"
 )
 
 // Manifest describes a workspace backup.
@@ -105,7 +105,7 @@ func sanitiseGitConfig(path string) {
 	}
 	for _, p := range patterns {
 		re := regexp.MustCompile(p)
-		content = re.ReplaceAllString(content, "# REDACTED by gyanesh-help")
+		content = re.ReplaceAllString(content, "# REDACTED by cue")
 	}
 	os.WriteFile(path, []byte(content), 0644)
 }

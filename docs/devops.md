@@ -1,10 +1,10 @@
 # ⚙️ DevOps Stack
 
-The `gyanesh-help` DevOps stack is a combat-tested toolkit designed for SREs and Platform Engineers. It standardizes infrastructure-as-code and container orchestration pipelines.
+The `cue` DevOps stack is a combat-tested toolkit designed for SREs and Platform Engineers. It standardizes infrastructure-as-code and container orchestration pipelines.
 
 ## The Environment Store: `devops`
 
-Running `gyanesh-help store install devops` directly provisions:
+Running `cue store install devops` directly provisions:
 - **Terraform / OpenTofu**: Infrastructure provisioning.
 - **Kubernetes (kubectl & helm)**: Cluster management.
 - **AWS/GCP/Azure CLIs**: Bound to your current identity.
@@ -34,4 +34,4 @@ Running `gyanesh-help store install devops` directly provisions:
   - *Why:* Switches GC contexts without having to memorize the underlying configuration tree.
 
 ---
-*Achieve infrastructure zen. Run `gyanesh-help store install devops`.*
+*Achieve infrastructure zen. Run `cue store install devops`.*

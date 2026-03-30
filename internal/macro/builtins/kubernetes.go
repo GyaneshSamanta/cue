@@ -1,6 +1,6 @@
 package builtins
 
-import "github.com/GyaneshSamanta/gyanesh-help/internal/macro"
+import "github.com/GyaneshSamanta/cue/internal/macro"
 
 func init() {
 	registerKubernetesMacros()

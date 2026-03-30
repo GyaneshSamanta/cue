@@ -3,8 +3,8 @@ package store_test
 import (
 	"testing"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/store"
-	_ "github.com/GyaneshSamanta/gyanesh-help/internal/store/stacks"
+	"github.com/GyaneshSamanta/cue/internal/store"
+	_ "github.com/GyaneshSamanta/cue/internal/store/stacks"
 )
 
 // TestStoreStacks verifies that the engine loads stacks correctly.

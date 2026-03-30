@@ -6,8 +6,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/adapter"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/adapter"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 // Verify checks that all stack components are reachable and working.

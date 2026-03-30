@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 // Detection represents a detected project type and its recommendations.
@@ -133,7 +133,7 @@ func PrintDetection(detections []Detection) {
 	fmt.Printf("  Project type: %s\n\n", primary.StackType)
 
 	if primary.StoreName != "" {
-		fmt.Printf("  Recommended store   : gyanesh-help store install %s\n", primary.StoreName)
+		fmt.Printf("  Recommended store   : cue store install %s\n", primary.StoreName)
 	}
 
 	if len(primary.EnvVars) > 0 {

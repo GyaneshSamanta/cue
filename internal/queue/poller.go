@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 // Poller implements adaptive lock polling with backoff.

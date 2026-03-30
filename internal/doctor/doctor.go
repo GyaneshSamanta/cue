@@ -8,9 +8,9 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/adapter"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/config"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/adapter"
+	"github.com/GyaneshSamanta/cue/internal/config"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 // Issue represents a single health check result.
@@ -85,7 +85,7 @@ func RunDoctor(a adapter.OSAdapter) []Issue {
 			}
 		}
 		if fixable > 0 {
-			fmt.Printf("Run 'gyanesh-help doctor fix --all' to auto-fix %d issues.\n", fixable)
+			fmt.Printf("Run 'cue doctor fix --all' to auto-fix %d issues.\n", fixable)
 		}
 	}
 
@@ -122,7 +122,7 @@ func checkTool(name, bin string, args ...string) []Issue {
 	out, err := exec.Command(bin, args...).CombinedOutput()
 	if err != nil {
 		printStatus("✗", name, "", "not found", "error")
-		fixCmd := fmt.Sprintf("gyanesh-help toolkit install %s", name)
+		fixCmd := fmt.Sprintf("cue toolkit install %s", name)
 		return []Issue{{
 			Category: "core", Tool: name, Status: "error",
 			Message: "not installed",
@@ -139,16 +139,16 @@ func checkTool(name, bin string, args ...string) []Issue {
 
 func checkPATH() []Issue {
 	var issues []Issue
-	_, err := exec.LookPath("gyanesh-help")
+	_, err := exec.LookPath("cue")
 	if err != nil {
-		printStatus("✗", "gyanesh-help", "", "not on PATH", "error")
+		printStatus("✗", "cue", "", "not on PATH", "error")
 		issues = append(issues, Issue{
-			Category: "path", Tool: "gyanesh-help", Status: "error",
+			Category: "path", Tool: "cue", Status: "error",
 			Message: "binary not on PATH",
 		})
 	} else {
-		printStatus("✔", "gyanesh-help", "", "on PATH", "ok")
-		issues = append(issues, Issue{Category: "path", Tool: "gyanesh-help", Status: "ok"})
+		printStatus("✔", "cue", "", "on PATH", "ok")
+		issues = append(issues, Issue{Category: "path", Tool: "cue", Status: "ok"})
 	}
 	return issues
 }
@@ -160,7 +160,7 @@ func checkShellCompletions() []Issue {
 		return []Issue{{
 			Category: "shell", Tool: "completions", Status: "warn",
 			Message: "completions not installed",
-			FixCmd:  "gyanesh-help setup", FixableAuto: true,
+			FixCmd:  "cue setup", FixableAuto: true,
 		}}
 	}
 	printStatus("✔", "shell completions", "", "installed", "ok")
@@ -193,14 +193,14 @@ func checkSSHKeys() []Issue {
 		return []Issue{{
 			Category: "security", Tool: "ssh-key", Status: "warn",
 			Message: "RSA key found; consider migrating to ed25519",
-			FixCmd:  "gyanesh-help ssh-keygen-github", FixableAuto: true,
+			FixCmd:  "cue ssh-keygen-github", FixableAuto: true,
 		}}
 	}
 	printStatus("✗", "SSH key", "", "none found", "error")
 	return []Issue{{
 		Category: "security", Tool: "ssh-key", Status: "error",
 		Message: "No SSH key found",
-		FixCmd:  "gyanesh-help ssh-keygen-github", FixableAuto: true,
+		FixCmd:  "cue ssh-keygen-github", FixableAuto: true,
 	}}
 }
 

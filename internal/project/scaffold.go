@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 // ScaffoldType defines project scaffold options.
@@ -59,8 +59,8 @@ func Scaffold(name string, scaffoldIdx int) error {
 	ui.PrintStep("Writing .gitignore...")
 	writeGitignore(name, scaffold.Stack)
 
-	// Write .gyanesh-help project file
-	ui.PrintStep("Writing .gyanesh-help config...")
+	// Write .cue project file
+	ui.PrintStep("Writing .cue config...")
 	writeProjectConfig(name, scaffold.Stack)
 
 	// Run scaffold
@@ -92,11 +92,11 @@ func writeGitignore(dir, stack string) {
 
 func writeProjectConfig(dir, stack string) {
 	name := filepath.Base(dir)
-	content := fmt.Sprintf(`# .gyanesh-help project config
+	content := fmt.Sprintf(`# .cue project config
 tag = "%s"
 stack = "%s"
 `, name, stack)
-	os.WriteFile(filepath.Join(dir, ".gyanesh-help"), []byte(content), 0644)
+	os.WriteFile(filepath.Join(dir, ".cue"), []byte(content), 0644)
 }
 
 func scaffoldNodeExpress(dir string) error {

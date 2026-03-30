@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/adapter"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/adapter"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 // Job represents a managed child process.
@@ -109,7 +109,7 @@ func (jc *Controller) ManagedRun(cmd *exec.Cmd, jobID string) error {
 			}
 
 		case <-sigCh:
-			ui.PrintInfo("[PAUSED] Manual pause. Run 'gyanesh-help resume' to continue.")
+			ui.PrintInfo("[PAUSED] Manual pause. Run 'cue resume' to continue.")
 			jc.Adapter.SuspendProcess(pid)
 			job.Status = "paused"
 			job.PauseReason = "manual"

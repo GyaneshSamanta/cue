@@ -1,6 +1,6 @@
 package stacks
 
-import "github.com/GyaneshSamanta/gyanesh-help/internal/store"
+import "github.com/GyaneshSamanta/cue/internal/store"
 
 func init() { store.RegisterStack(&DataScienceStack{}) }
 

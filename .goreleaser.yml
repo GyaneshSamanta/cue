@@ -1,4 +1,4 @@
-project_name: gyanesh-help
+project_name: cue
 
 before:
   hooks:
@@ -18,7 +18,7 @@ builds:
       - -s -w
       - -X main.Version={{.Version}}
       - -X main.BuildDate={{.Date}}
-    binary: gyanesh-help
+    binary: cue
 
 archives:
   - format: tar.gz
@@ -33,7 +33,7 @@ checksum:
 release:
   github:
     owner: GyaneshSamanta
-    name: gyanesh-help
+    name: cue
   name_template: "v{{.Version}}"
 
 changelog:

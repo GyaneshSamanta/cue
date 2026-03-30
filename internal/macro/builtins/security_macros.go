@@ -1,6 +1,6 @@
 package builtins
 
-import "github.com/GyaneshSamanta/gyanesh-help/internal/macro"
+import "github.com/GyaneshSamanta/cue/internal/macro"
 
 func init() {
 	registerSecurityMacros()
@@ -22,7 +22,7 @@ If mkcert is installed, prefer: mkcert localhost`,
 
 	macro.Register(&macro.Macro{
 		Name:        "ssh-copy-id-github",
-		Command:     "cat ~/.ssh/id_ed25519.pub | gh ssh-key add -t 'gyanesh-help-added'",
+		Command:     "cat ~/.ssh/id_ed25519.pub | gh ssh-key add -t 'cue-added'",
 		Description: "Copy SSH public key to GitHub (via gh CLI)",
 		Explanation: `Reads your ed25519 public key and adds it to your GitHub account.
 Requires: gh CLI authenticated (run 'gh auth login' first).

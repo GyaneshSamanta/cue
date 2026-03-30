@@ -9,8 +9,8 @@ import (
 	"strings"
 
 	"github.com/BurntSushi/toml"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/config"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/config"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 // Profile represents a named environment profile.
@@ -123,7 +123,7 @@ func ListProfiles() error {
 	dir := ProfilesDir()
 	entries, err := os.ReadDir(dir)
 	if err != nil || len(entries) == 0 {
-		ui.PrintInfo("No profiles created. Use 'gyanesh-help profile create <name>' to create one.")
+		ui.PrintInfo("No profiles created. Use 'cue profile create <name>' to create one.")
 		return nil
 	}
 
@@ -150,7 +150,7 @@ func ListProfiles() error {
 func Current() {
 	data, err := os.ReadFile(filepath.Join(config.ConfigDir(), "active-profile"))
 	if err != nil {
-		ui.PrintInfo("No active profile. Use 'gyanesh-help profile switch <name>'.")
+		ui.PrintInfo("No active profile. Use 'cue profile switch <name>'.")
 		return
 	}
 	fmt.Printf("Active profile: %s\n", strings.TrimSpace(string(data)))

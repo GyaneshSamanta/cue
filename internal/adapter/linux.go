@@ -197,7 +197,7 @@ func (a *LinuxAdapter) RunElevated(cmd string, args []string) error {
 }
 
 func (a *LinuxAdapter) HomeDir() string   { return a.homeDir }
-func (a *LinuxAdapter) ConfigDir() string  { return filepath.Join(a.homeDir, ".gyanesh-help") }
+func (a *LinuxAdapter) ConfigDir() string  { return filepath.Join(a.homeDir, ".cue") }
 func (a *LinuxAdapter) OSName() string     { return "linux" }
 func (a *LinuxAdapter) OSDistro() string   { return a.distro }
 

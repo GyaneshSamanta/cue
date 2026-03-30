@@ -7,8 +7,8 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/config"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/config"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 // Task represents a scheduled task.
@@ -32,7 +32,7 @@ func Schedule(task Task) error {
 	}
 }
 
-// List shows all gyanesh-help scheduled tasks.
+// List shows all cue scheduled tasks.
 func List() error {
 	ui.PrintHeader("Scheduled Tasks")
 
@@ -52,7 +52,7 @@ func List() error {
 			}
 		}
 	case "windows":
-		cmd := exec.Command("schtasks", "/query", "/tn", "gyanesh-help-*", "/fo", "TABLE")
+		cmd := exec.Command("schtasks", "/query", "/tn", "cue-*", "/fo", "TABLE")
 		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 		cmd.Run()
@@ -71,7 +71,7 @@ func Remove(taskName string) error {
 		exec.Command("launchctl", "unload", plistPath).Run()
 		os.Remove(plistPath)
 	case "windows":
-		exec.Command("schtasks", "/delete", "/tn", "gyanesh-help-"+taskName, "/f").Run()
+		exec.Command("schtasks", "/delete", "/tn", "cue-"+taskName, "/f").Run()
 	}
 	ui.PrintSuccess(fmt.Sprintf("Removed scheduled task: %s", taskName))
 	return nil
@@ -85,7 +85,7 @@ func scheduleLinux(task Task) error {
 	// Service file
 	servicePath := filepath.Join(unitDir, "gyanesh-"+task.Name+".service")
 	serviceContent := fmt.Sprintf(`[Unit]
-Description=gyanesh-help %s
+Description=cue %s
 
 [Service]
 Type=oneshot
@@ -103,7 +103,7 @@ ExecStart=%s
 
 	timerPath := filepath.Join(unitDir, "gyanesh-"+task.Name+".timer")
 	timerContent := fmt.Sprintf(`[Unit]
-Description=gyanesh-help %s timer
+Description=cue %s timer
 
 [Timer]
 OnCalendar=%s
@@ -171,7 +171,7 @@ func scheduleWindows(task Task) error {
 	_ = config.ConfigDir() // ensure import used
 
 	cmd := exec.Command("schtasks", "/create",
-		"/tn", "gyanesh-help-"+task.Name,
+		"/tn", "cue-"+task.Name,
 		"/tr", task.Command,
 		"/sc", sched,
 		"/f")

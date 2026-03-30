@@ -6,9 +6,9 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/macro"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/tui"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/macro"
+	"github.com/GyaneshSamanta/cue/internal/tui"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 func pickMacro() string {

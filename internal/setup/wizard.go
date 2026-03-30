@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/adapter"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/config"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/adapter"
+	"github.com/GyaneshSamanta/cue/internal/config"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 // NeedsSetup returns true if first-run wizard should trigger.
@@ -22,7 +22,7 @@ func NeedsSetup() bool {
 func RunWizard(a adapter.OSAdapter) error {
 	fmt.Println()
 	fmt.Println("  ╔══════════════════════════════════════╗")
-	fmt.Println("  ║     Welcome to gyanesh-help v2.0     ║")
+	fmt.Println("  ║     Welcome to cue v2.0     ║")
 	fmt.Println("  ╚══════════════════════════════════════╝")
 	fmt.Println()
 	fmt.Println("  Let's configure a few things. This takes about 60 seconds.")
@@ -112,11 +112,11 @@ shell = "%s"
 	fmt.Println()
 	fmt.Println("  Try these commands next:")
 	fmt.Println("  ┌──────────────────────────────────────────────────────────────┐")
-	fmt.Println("  │  gyanesh-help doctor          — check your environment      │")
-	fmt.Println("  │  gyanesh-help store            — browse environment stacks  │")
-	fmt.Println("  │  gyanesh-help toolkit list     — available dev tools        │")
-	fmt.Println("  │  gyanesh-help explain --list   — explore macros             │")
-	fmt.Println("  │  gyanesh-help status           — system overview            │")
+	fmt.Println("  │  cue doctor          — check your environment      │")
+	fmt.Println("  │  cue store            — browse environment stacks  │")
+	fmt.Println("  │  cue toolkit list     — available dev tools        │")
+	fmt.Println("  │  cue explain --list   — explore macros             │")
+	fmt.Println("  │  cue status           — system overview            │")
 	fmt.Println("  └──────────────────────────────────────────────────────────────┘")
 	fmt.Println()
 
@@ -160,17 +160,17 @@ func writeCompletions(shell string) error {
 
 	switch shell {
 	case "zsh":
-		outFile = filepath.Join(dir, "_gyanesh-help")
-		cmd = exec.Command("gyanesh-help", "completion", "zsh")
+		outFile = filepath.Join(dir, "_cue")
+		cmd = exec.Command("cue", "completion", "zsh")
 	case "bash":
-		outFile = filepath.Join(dir, "gyanesh-help.bash")
-		cmd = exec.Command("gyanesh-help", "completion", "bash")
+		outFile = filepath.Join(dir, "cue.bash")
+		cmd = exec.Command("cue", "completion", "bash")
 	case "fish":
-		outFile = filepath.Join(dir, "gyanesh-help.fish")
-		cmd = exec.Command("gyanesh-help", "completion", "fish")
+		outFile = filepath.Join(dir, "cue.fish")
+		cmd = exec.Command("cue", "completion", "fish")
 	case "powershell":
-		outFile = filepath.Join(dir, "gyanesh-help.ps1")
-		cmd = exec.Command("gyanesh-help", "completion", "powershell")
+		outFile = filepath.Join(dir, "cue.ps1")
+		cmd = exec.Command("cue", "completion", "powershell")
 	default:
 		return fmt.Errorf("unsupported shell: %s", shell)
 	}

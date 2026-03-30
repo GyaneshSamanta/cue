@@ -1,6 +1,6 @@
 package builtins
 
-import "github.com/GyaneshSamanta/gyanesh-help/internal/macro"
+import "github.com/GyaneshSamanta/cue/internal/macro"
 
 func registerNetworkMacros() {
 	reg(&macro.Macro{
@@ -32,7 +32,7 @@ you may need to restart it.
 ✔ Port check complete.
 ─────────────────────────────────────────────────────
 If a process is shown, it's currently using that port.
-Use 'gyanesh-help port-kill <port>' to free it.
+Use 'cue port-kill <port>' to free it.
 ─────────────────────────────────────────────────────`,
 		BuiltIn: true,
 	})
@@ -41,14 +41,14 @@ Use 'gyanesh-help port-kill <port>' to free it.
 		Name: "kill-port", Category: "network", Dangerous: true,
 		Description: "Interactive port-to-process killer",
 		Commands: []macro.Step{
-			{OS: "linux", Command: `ss -tlnp | head -20 && echo "Use: gyanesh-help port-kill <port>"`},
-			{OS: "darwin", Command: `lsof -iTCP -sTCP:LISTEN | head -20 && echo "Use: gyanesh-help port-kill <port>"`},
-			{OS: "windows", Command: `netstat -aon | findstr LISTENING | head -20 & echo Use: gyanesh-help port-kill <port>`},
+			{OS: "linux", Command: `ss -tlnp | head -20 && echo "Use: cue port-kill <port>"`},
+			{OS: "darwin", Command: `lsof -iTCP -sTCP:LISTEN | head -20 && echo "Use: cue port-kill <port>"`},
+			{OS: "windows", Command: `netstat -aon | findstr LISTENING | head -20 & echo Use: cue port-kill <port>`},
 		},
 		Explanation: `
 ✔ Listed all listening ports and their processes.
 ─────────────────────────────────────────────────────
-Use 'gyanesh-help port-kill <port>' to kill a specific process.
+Use 'cue port-kill <port>' to kill a specific process.
 ─────────────────────────────────────────────────────`,
 		BuiltIn: true,
 	})

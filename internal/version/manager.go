@@ -8,7 +8,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 // Backend defines a version manager backend.
@@ -76,7 +76,7 @@ func UseVersion(rt, ver string) error {
 		return fmt.Errorf("unsupported runtime: %s", rt)
 	}
 	if b.UseCmd == "" {
-		return fmt.Errorf("%s does not support version switching via gyanesh-help", rt)
+		return fmt.Errorf("%s does not support version switching via cue", rt)
 	}
 
 	cmd := fmt.Sprintf(b.UseCmd, ver)
@@ -95,7 +95,7 @@ func InstallVersion(rt, ver string) error {
 		return fmt.Errorf("unsupported runtime: %s", rt)
 	}
 	if b.InstallCmd == "" {
-		return fmt.Errorf("%s does not support version installation via gyanesh-help", rt)
+		return fmt.Errorf("%s does not support version installation via cue", rt)
 	}
 
 	cmd := fmt.Sprintf(b.InstallCmd, ver)
@@ -110,7 +110,7 @@ func RemoveVersion(rt, ver string) error {
 		return fmt.Errorf("unsupported runtime: %s", rt)
 	}
 	if b.RemoveCmd == "" {
-		return fmt.Errorf("%s does not support version removal via gyanesh-help", rt)
+		return fmt.Errorf("%s does not support version removal via cue", rt)
 	}
 
 	cmd := fmt.Sprintf(b.RemoveCmd, ver)

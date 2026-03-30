@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/GyaneshSamanta/gyanesh-help/cmd"
+	"github.com/GyaneshSamanta/cue/cmd"
 )
 
 var (

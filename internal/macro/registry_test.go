@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/macro"
-	_ "github.com/GyaneshSamanta/gyanesh-help/internal/macro/builtins"
+	"github.com/GyaneshSamanta/cue/internal/macro"
+	_ "github.com/GyaneshSamanta/cue/internal/macro/builtins"
 )
 
 // TestRegistryIntegrity verifies that every registered macro is structurally sound.

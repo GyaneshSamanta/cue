@@ -1,4 +1,4 @@
-# gyanesh-help workspace backup — sensitive file exclusions
+# cue workspace backup — sensitive file exclusions
 *.pem
 *.key
 id_rsa

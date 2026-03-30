@@ -5,7 +5,7 @@ Set Height 650
 Set Padding 30
 Set Theme "Catppuccin Macchiato"
 
-Type "gyanesh-help store install mern"
+Type "cue store install mern"
 Enter
 
 Sleep 15s

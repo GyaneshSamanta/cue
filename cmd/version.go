@@ -3,8 +3,8 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
-	vermgr "github.com/GyaneshSamanta/gyanesh-help/internal/version"
+	"github.com/GyaneshSamanta/cue/internal/ui"
+	vermgr "github.com/GyaneshSamanta/cue/internal/version"
 )
 
 var versionMgrCmd = &cobra.Command{

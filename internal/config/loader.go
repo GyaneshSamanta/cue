@@ -90,17 +90,17 @@ func DefaultConfig() *Config {
 	}
 }
 
-// ConfigDir returns the gyanesh-help config directory path.
+// ConfigDir returns the cue config directory path.
 func ConfigDir() string {
 	if runtime.GOOS == "windows" {
 		if appdata := os.Getenv("APPDATA"); appdata != "" {
-			return filepath.Join(appdata, "gyanesh-help")
+			return filepath.Join(appdata, "cue")
 		}
 		home, _ := os.UserHomeDir()
-		return filepath.Join(home, ".gyanesh-help")
+		return filepath.Join(home, ".cue")
 	}
 	home, _ := os.UserHomeDir()
-	return filepath.Join(home, ".gyanesh-help")
+	return filepath.Join(home, ".cue")
 }
 
 // Load applies the 3-tier config priority: defaults → user config → project-local.
@@ -124,7 +124,7 @@ func Load() (*Config, error) {
 	}
 
 	// Layer: project-local config
-	localCfg := ".gyanesh-help.toml"
+	localCfg := ".cue.toml"
 	if _, err := os.Stat(localCfg); err == nil {
 		toml.DecodeFile(localCfg, cfg)
 	}
@@ -134,7 +134,7 @@ func Load() (*Config, error) {
 }
 
 func writeDefaultConfig(path string) {
-	content := `# gyanesh-help User Configuration
+	content := `# cue User Configuration
 # This file overrides the compiled-in defaults.
 
 [core]

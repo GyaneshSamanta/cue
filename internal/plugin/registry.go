@@ -9,9 +9,9 @@ import (
 	"strings"
 
 	"github.com/BurntSushi/toml"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/config"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/macro"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/config"
+	"github.com/GyaneshSamanta/cue/internal/macro"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 // Plugin represents a TOML plugin file.
@@ -26,7 +26,7 @@ type PluginMeta struct {
 	Version           string `toml:"version"`
 	Description       string `toml:"description"`
 	Author            string `toml:"author"`
-	MinGyaneshVersion string `toml:"min_gyanesh_help_version"`
+	MinGyaneshVersion string `toml:"min_cue_version"`
 }
 
 // PluginMacro is a macro defined in a plugin.
@@ -63,7 +63,7 @@ func Install(source string) error {
 		}
 	} else {
 		// Try curated registry URL
-		registryURL := fmt.Sprintf("https://raw.githubusercontent.com/GyaneshSamanta/gyanesh-help-plugins/main/plugins/%s.toml", source)
+		registryURL := fmt.Sprintf("https://raw.githubusercontent.com/GyaneshSamanta/cue-plugins/main/plugins/%s.toml", source)
 		resp, err := http.Get(registryURL)
 		if err != nil || resp.StatusCode != 200 {
 			return fmt.Errorf("plugin '%s' not found in registry. Try a full URL.", source)
@@ -108,7 +108,7 @@ func List() error {
 	dir := PluginsDir()
 	entries, err := os.ReadDir(dir)
 	if err != nil || len(entries) == 0 {
-		ui.PrintInfo("No plugins installed. Use 'gyanesh-help plugin install <name>' to add one.")
+		ui.PrintInfo("No plugins installed. Use 'cue plugin install <name>' to add one.")
 		return nil
 	}
 
@@ -158,7 +158,7 @@ name = "%s"
 version = "1.0.0"
 description = "Description of your plugin"
 author = "your-name"
-min_gyanesh_help_version = "2.0.0"
+min_cue_version = "2.0.0"
 
 [[macro]]
 name = "%s-example"
@@ -173,6 +173,6 @@ Replace this with your actual macro.
 	filename := name + ".toml"
 	os.WriteFile(filename, []byte(content), 0644)
 	ui.PrintSuccess(fmt.Sprintf("Plugin template created: %s", filename))
-	ui.PrintInfo("Edit the file, then run 'gyanesh-help plugin install ./" + filename + "' to test.")
+	ui.PrintInfo("Edit the file, then run 'cue plugin install ./" + filename + "' to test.")
 	return nil
 }

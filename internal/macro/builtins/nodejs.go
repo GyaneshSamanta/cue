@@ -1,6 +1,6 @@
 package builtins
 
-import "github.com/GyaneshSamanta/gyanesh-help/internal/macro"
+import "github.com/GyaneshSamanta/cue/internal/macro"
 
 func registerNodejsMacros() {
 	reg(&macro.Macro{
@@ -25,7 +25,7 @@ Review changes: git diff package.json package-lock.json
 ✔ Displayed current Node and NPM versions.
 ─────────────────────────────────────────────────────
 If these versions do not match your project requirements,
-consider running 'gyanesh-help version' to switch runtimes.
+consider running 'cue version' to switch runtimes.
 ─────────────────────────────────────────────────────`,
 		BuiltIn: true,
 	})

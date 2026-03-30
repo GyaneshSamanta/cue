@@ -9,29 +9,29 @@ import (
 var completionCmd = &cobra.Command{
 	Use:   "completion [bash|zsh|fish|powershell]",
 	Short: "Generate shell completion scripts",
-	Long: `Generate shell completion scripts for gyanesh-help.
+	Long: `Generate shell completion scripts for cue.
 
 To load completions:
 
 Bash:
-  $ source <(gyanesh-help completion bash)
+  $ source <(cue completion bash)
   # To load completions for each session, execute once:
   # Linux:
-  $ gyanesh-help completion bash > /etc/bash_completion.d/gyanesh-help
+  $ cue completion bash > /etc/bash_completion.d/cue
   # macOS:
-  $ gyanesh-help completion bash > $(brew --prefix)/etc/bash_completion.d/gyanesh-help
+  $ cue completion bash > $(brew --prefix)/etc/bash_completion.d/cue
 
 Zsh:
-  $ gyanesh-help completion zsh > "${fpath[1]}/_gyanesh-help"
+  $ cue completion zsh > "${fpath[1]}/_cue"
   # You might need to start a new shell or run: compinit
 
 Fish:
-  $ gyanesh-help completion fish | source
-  $ gyanesh-help completion fish > ~/.config/fish/completions/gyanesh-help.fish
+  $ cue completion fish | source
+  $ cue completion fish > ~/.config/fish/completions/cue.fish
 
 PowerShell:
-  PS> gyanesh-help completion powershell | Out-String | Invoke-Expression
-  PS> gyanesh-help completion powershell > gyanesh-help.ps1
+  PS> cue completion powershell | Out-String | Invoke-Expression
+  PS> cue completion powershell > cue.ps1
 `,
 	DisableFlagsInUseLine: true,
 	ValidArgs:             []string{"bash", "zsh", "fish", "powershell"},

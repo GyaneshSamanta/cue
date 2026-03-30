@@ -5,8 +5,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/claudecode"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/claudecode"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 var claudeCodeCmd = &cobra.Command{

@@ -1,13 +1,13 @@
 #!/bin/bash
-# gyanesh-help installer for Linux and macOS
-# Usage: curl -fsSL https://raw.githubusercontent.com/GyaneshSamanta/gyanesh-help/main/scripts/install.sh | bash
+# cue installer for Linux and macOS
+# Usage: curl -fsSL https://raw.githubusercontent.com/GyaneshSamanta/cue/main/scripts/install.sh | bash
 
 set -euo pipefail
 
-REPO="GyaneshSamanta/gyanesh-help"
+REPO="GyaneshSamanta/cue"
 INSTALL_DIR="/usr/local/bin"
-CONFIG_DIR="$HOME/.gyanesh-help"
-BINARY_NAME="gyanesh-help"
+CONFIG_DIR="$HOME/.cue"
+BINARY_NAME="cue"
 
 # Colors
 RED='\033[0;31m'
@@ -139,7 +139,7 @@ verify() {
 # Main
 echo ""
 echo "  ╔══════════════════════════════════════╗"
-echo "  ║       gyanesh-help installer         ║"
+echo "  ║       cue installer         ║"
 echo "  ║   Cross-Platform CLI Dev Utility     ║"
 echo "  ╚══════════════════════════════════════╝"
 echo ""
@@ -152,5 +152,5 @@ setup_config
 verify
 
 echo ""
-print_ok "Installation complete! Run 'gyanesh-help --help' to get started."
+print_ok "Installation complete! Run 'cue --help' to get started."
 echo ""

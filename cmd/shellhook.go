@@ -6,8 +6,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/shellhook"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/shellhook"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 var shellHookCmd = &cobra.Command{
@@ -15,7 +15,7 @@ var shellHookCmd = &cobra.Command{
 	Short: "Manage shell hooks for auto-activation and project detection",
 	Long: `Install or uninstall shell hooks that provide:
   • Auto-activate virtual environments on cd
-  • Auto-switch project tags from .gyanesh-help config
+  • Auto-switch project tags from .cue config
   • Stack detection hints when missing tools
   • Prompt enrichment with active project tag`,
 }

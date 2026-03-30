@@ -6,9 +6,9 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/store"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/tui"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/store"
+	"github.com/GyaneshSamanta/cue/internal/tui"
+	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
 func pickStack() string {
@@ -51,7 +51,7 @@ var storeCmd = &cobra.Command{
 				})
 			}
 			ui.PrintTable(headers, rows)
-			ui.PrintInfo("Use 'gyanesh-help store install <name>' to set up a stack.")
+			ui.PrintInfo("Use 'cue store install <name>' to set up a stack.")
 			return
 		}
 

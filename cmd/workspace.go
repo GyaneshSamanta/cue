@@ -3,8 +3,8 @@ package cmd
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/GyaneshSamanta/gyanesh-help/internal/ui"
-	"github.com/GyaneshSamanta/gyanesh-help/internal/workspace"
+	"github.com/GyaneshSamanta/cue/internal/ui"
+	"github.com/GyaneshSamanta/cue/internal/workspace"
 )
 
 var workspaceCmd = &cobra.Command{
@@ -18,7 +18,7 @@ var workspaceBackupCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		token := ui.ReadInput("GitHub PAT: ")
 		if token == "" {
-			ui.PrintError("Token required. Use: gyanesh-help workspace auth --token <PAT>")
+			ui.PrintError("Token required. Use: cue workspace auth --token <PAT>")
 			return
 		}
 		if err := workspace.Backup(osAdapter, token, "dev-workspace-backup"); err != nil {

@@ -99,7 +99,7 @@ func (a *DarwinAdapter) RunElevated(cmd string, args []string) error {
 }
 
 func (a *DarwinAdapter) HomeDir() string   { return a.homeDir }
-func (a *DarwinAdapter) ConfigDir() string  { return filepath.Join(a.homeDir, ".gyanesh-help") }
+func (a *DarwinAdapter) ConfigDir() string  { return filepath.Join(a.homeDir, ".cue") }
 func (a *DarwinAdapter) OSName() string     { return "darwin" }
 func (a *DarwinAdapter) OSDistro() string   { return "" }
 
