@@ -53,8 +53,8 @@ func (m *Macro) StepsForOS(os string, flags map[string]string) []Step {
 	return result
 }
 
-// tomlMacro is the TOML deserialization format for user macros.
-type tomlMacro struct {
+// TomlMacro is the TOML deserialization format for user macros.
+type TomlMacro struct {
 	Name        string   `toml:"name"`
 	Command     string   `toml:"command"`
 	Category    string   `toml:"category"`
@@ -66,7 +66,7 @@ type tomlMacro struct {
 // LoadUserMacros reads custom macros from macros.toml and merges into Registry.
 func LoadUserMacros(path string) error {
 	var file struct {
-		Macro []tomlMacro `toml:"macro"`
+		Macro []TomlMacro `toml:"macro"`
 	}
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		return nil
@@ -85,4 +85,23 @@ func LoadUserMacros(path string) error {
 		}
 	}
 	return nil
+}
+
+// SaveUserMacro persists a new custom macro to the macros.toml file.
+func SaveUserMacro(path string, tm TomlMacro) error {
+	var file struct {
+		Macro []TomlMacro `toml:"macro"`
+	}
+	if _, err := os.Stat(path); err == nil {
+		if _, err := toml.DecodeFile(path, &file); err != nil {
+			return err
+		}
+	}
+	file.Macro = append(file.Macro, tm)
+	f, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	return toml.NewEncoder(f).Encode(file)
 }

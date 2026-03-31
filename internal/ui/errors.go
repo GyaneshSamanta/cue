@@ -5,9 +5,9 @@ import (
 	"os"
 )
 
-// StructuRedError implements the error interface to provide
+// StructuredError implements the error interface to provide
 // clear, actionable "What happened / What to do" guidance.
-type StructuRedError struct {
+type StructuredError struct {
 	Title        string
 	WhatHappened string
 	WhatToDo     []string
@@ -16,7 +16,7 @@ type StructuRedError struct {
 
 // Error fulfills the error interface. It returns the raw error
 // without ANSI formatting for simple logging if needed.
-func (e *StructuRedError) Error() string {
+func (e *StructuredError) Error() string {
 	msg := fmt.Sprintf("%s: %s", e.Title, e.WhatHappened)
 	if e.original != nil {
 		msg += fmt.Sprintf(" (%v)", e.original)
@@ -25,13 +25,13 @@ func (e *StructuRedError) Error() string {
 }
 
 // Unwrap allows standard errors.Is / errors.As matching.
-func (e *StructuRedError) Unwrap() error {
+func (e *StructuredError) Unwrap() error {
 	return e.original
 }
 
-// NewStructuRedError creates a new "What happened / What to do" error.
-func NewStructuRedError(title, happened string, todo []string, original error) *StructuRedError {
-	return &StructuRedError{
+// NewStructuredError creates a new "What happened / What to do" error.
+func NewStructuredError(title, happened string, todo []string, original error) *StructuredError {
+	return &StructuredError{
 		Title:        title,
 		WhatHappened: happened,
 		WhatToDo:     todo,
@@ -39,14 +39,14 @@ func NewStructuRedError(title, happened string, todo []string, original error) *
 	}
 }
 
-// HandleError attempts to format and print a StructuRedError beautifully.
+// HandleError attempts to format and print a StructuredError beautifully.
 // If it's a normal error, it falls back to PrintError.
 func HandleError(err error) {
 	if err == nil {
 		return
 	}
 
-	if se, ok := err.(*StructuRedError); ok {
+	if se, ok := err.(*StructuredError); ok {
 		// Beautiful CLI formatting
 		fmt.Fprintf(os.Stderr, "\n%s %s\n\n", c(Red, "❌"), c(Bold, se.Title))
 
@@ -69,12 +69,12 @@ func HandleError(err error) {
 	PrintError(err.Error())
 }
 
-// HandlePanic captures panics and renders them as a StructuRedError.
+// HandlePanic captures panics and renders them as a StructuredError.
 func HandlePanic() {
 	if r := recover(); r != nil {
-		se := NewStructuRedError(
+		se := NewStructuredError(
 			"cue crashed unexpectedly",
-			fmt.Sprintf("An unexpected panic occurRed:\n  %v", r),
+			fmt.Sprintf("An unexpected panic occurred:\n  %v", r),
 			[]string{
 				"Please report this issue on GitHub at github.com/GyaneshSamanta/cue/issues",
 				"Run 'cue doctor' to check your environment state",

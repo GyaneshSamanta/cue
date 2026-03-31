@@ -6,8 +6,34 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/GyaneshSamanta/cue/internal/claudecode"
+	"github.com/GyaneshSamanta/cue/internal/tui"
 	"github.com/GyaneshSamanta/cue/internal/ui"
 )
+
+var claudeCodeInstallCmd = &cobra.Command{
+	Use:   "install",
+	Short: "Install Claude Code (API, Local, or Hybrid mode)",
+	Run: func(cmd *cobra.Command, args []string) {
+		items := []tui.PickerItem{
+			{Name: "API Mode", Description: "Standard cloud-based execution (requires API key)"},
+			{Name: "Local Mode", Description: "Free, private execution via Ollama + LiteLLM"},
+			{Name: "Hybrid Mode", Description: "API-first with automatic local fallback"},
+		}
+		idx, err := tui.RunPicker("Claude Code Setup Mode", items)
+		if err != nil || idx == -1 {
+			return
+		}
+
+		switch idx {
+		case 0:
+			claudecode.InstallAPIMode(osAdapter)
+		case 1:
+			claudecode.InstallLocalMode(osAdapter)
+		case 2:
+			claudecode.InstallHybridMode(osAdapter)
+		}
+	},
+}
 
 var claudeCodeCmd = &cobra.Command{
 	Use:   "claude-code",
@@ -90,5 +116,11 @@ var claudeCodeUpdateCmd = &cobra.Command{
 
 func init() {
 	claudeCodeMCPCmd.AddCommand(claudeCodeMCPListCmd, claudeCodeMCPAddCmd, claudeCodeMCPRemoveCmd)
-	claudeCodeCmd.AddCommand(claudeCodeStatusCmd, claudeCodeSwitchCmd, claudeCodeMCPCmd, claudeCodeUpdateCmd)
+	claudeCodeCmd.AddCommand(
+		claudeCodeInstallCmd,
+		claudeCodeStatusCmd,
+		claudeCodeSwitchCmd,
+		claudeCodeMCPCmd,
+		claudeCodeUpdateCmd,
+	)
 }

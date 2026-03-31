@@ -2,10 +2,12 @@ package cmd
 
 import (
 	"fmt"
+	"path/filepath"
 	"sort"
 
 	"github.com/spf13/cobra"
 
+	"github.com/GyaneshSamanta/cue/internal/config"
 	"github.com/GyaneshSamanta/cue/internal/macro"
 	"github.com/GyaneshSamanta/cue/internal/tui"
 	"github.com/GyaneshSamanta/cue/internal/ui"
@@ -62,8 +64,35 @@ var macroAddCmd = &cobra.Command{
 	Short: "Add a custom macro",
 	Args:  cobra.ExactArgs(3),
 	Run: func(cmd *cobra.Command, args []string) {
-		// TODO: Persist to macros.toml
-		ui.PrintSuccess(fmt.Sprintf("Macro '%s' added.", args[0]))
+		name := args[0]
+		command := args[1]
+		explanation := args[2]
+
+		tm := macro.TomlMacro{
+			Name:        name,
+			Command:     command,
+			Explanation: explanation,
+			Category:    "custom",
+			Description: "User-defined macro",
+		}
+
+		path := filepath.Join(config.ConfigDir(), "macros.toml")
+		if err := macro.SaveUserMacro(path, tm); err != nil {
+			ui.PrintError(fmt.Sprintf("Failed to save macro: %v", err))
+			return
+		}
+
+		// Also register it in the current session
+		macro.Register(&macro.Macro{
+			Name:        name,
+			Category:    "custom",
+			Description: "User-defined macro",
+			Commands:    []macro.Step{{OS: "all", Command: command}},
+			Explanation: explanation,
+			BuiltIn:     false,
+		})
+
+		ui.PrintSuccess(fmt.Sprintf("Macro '%s' added and saved successfully.", name))
 	},
 }
 
