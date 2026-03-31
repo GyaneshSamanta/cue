@@ -15,6 +15,13 @@ func RegisterAll() {
 	registerNodejsMacros()
 	registerSSHMacros()
 	registerWorkspaceMacros()
+	registerGoMacros()
+	registerRustMacros()
+	registerAILocalMacros()
+	registerCloudMacros()
+	registerKubernetesMacros()
+	registerTerraformMacros()
+	registerSecurityMacros()
 }
 
 func reg(m *macro.Macro) { macro.Register(m) }

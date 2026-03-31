@@ -2,13 +2,10 @@ package builtins
 
 import "github.com/GyaneshSamanta/cue/internal/macro"
 
-func init() {
-	registerTerraformMacros()
-}
-
 func registerTerraformMacros() {
 	macro.Register(&macro.Macro{
 		Name:        "tf-plan-clean",
+		Category:    "terraform",
 		Command:     "terraform init && terraform fmt -recursive && terraform validate && terraform plan",
 		Description: "Run full Terraform workflow: init → fmt → validate → plan",
 		Explanation: `Executes the complete Terraform pre-apply workflow in sequence:
@@ -18,5 +15,6 @@ func registerTerraformMacros() {
 4. terraform plan — shows what changes would be applied
 This is the standard "check before apply" workflow.`,
 		Dangerous: false,
+		BuiltIn:   true,
 	})
 }
