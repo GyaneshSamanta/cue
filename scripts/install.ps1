@@ -27,14 +27,19 @@ $Arch = if ([Environment]::Is64BitOperatingSystem) { "amd64" } else { "386" }
 Write-Ok "Detected: windows/$Arch"
 
 # Get latest version
-Write-Step "Fetching latest version..."
-try {
-    $Release = Invoke-RestMethod -Uri "https://api.github.com/repos/$Repo/releases/latest" -UseBasicParsing
-    $Version = $Release.tag_name -replace '^v', ''
-    Write-Ok "Latest version: v$Version"
-} catch {
-    $Version = "1.0.0"
-    Write-Warn "Could not fetch latest version, using v$Version"
+if ($env:CUE_VERSION) {
+    $Version = $env:CUE_VERSION -replace '^v', ''
+    Write-Ok "Using requested version: v$Version"
+} else {
+    Write-Step "Fetching latest version..."
+    try {
+        $Release = Invoke-RestMethod -Uri "https://api.github.com/repos/$Repo/releases/latest" -UseBasicParsing
+        $Version = $Release.tag_name -replace '^v', ''
+        Write-Ok "Latest version: v$Version"
+    } catch {
+        Write-Err "Could not fetch latest release. Set `$env:CUE_VERSION = 'vX.Y.Z' to install a specific version, or download from https://github.com/$Repo/releases"
+        exit 1
+    }
 }
 
 # Download

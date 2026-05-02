@@ -120,6 +120,7 @@ func init() {
 	rootCmd.AddCommand(updateCmd)
 	rootCmd.AddCommand(versionMgrCmd)
 	rootCmd.AddCommand(doctorCmd)
+	rootCmd.AddCommand(modelCmd)
 }
 
 // Execute runs the root command.
