@@ -25,7 +25,7 @@
 <br>
 
 <div align="center">
-  <h2>📺 Welcome to v2.0</h2>
+  <h2>📺 Welcome to v2.2</h2>
   <img src="docs/assets/onboarding_demo.gif" alt="Onboarding Demo" width="900" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
   <br><br>
   <h3>🏪 Environment Store Management</h3>
@@ -219,6 +219,27 @@ se := ui.NewStructuredError(
 )
 ui.HandleError(se)
 ```
+
+---
+
+## 📋 Changelog
+
+### v2.2.0 — May 2026
+
+**New**
+- **`cue model` command** — the `internal/model` package was wired up and is now a first-class CLI feature. Run `cue model --help` to see all subcommands.
+- **Google Gemma 3 support** — `cue model gemma [1b|4b|12b|27b]` installs Google Gemma via Ollama in one command. Hardware-aware `cue model recommend` now includes all four Gemma sizes.
+- **`cue toolkit` command** — install, upgrade, remove, and inspect developer tools with automatic version-manager bootstrapping (e.g. `cue toolkit install node`). Closes the loop from `cue doctor fix --all`, which had been suggesting `cue toolkit install <tool>` when the command didn't yet exist.
+- **Release pipeline** — added `.github/workflows/release.yml` that cross-compiles for linux/darwin/windows × amd64/arm64 and uploads binaries to GitHub Releases on every version tag. **This is what was causing the broken `install.sh` / `install.ps1`** — prior releases had no binary assets.
+- **CI pipeline** — added `.github/workflows/ci.yml` for build / vet / test checks on every PR.
+
+**Fixed**
+- `install.sh` and `install.ps1` now fail with a clear actionable error if no release is found, instead of silently downloading nothing.
+- Both scripts accept a `CUE_VERSION=vX.Y.Z` / `$env:CUE_VERSION` env var to pin to a specific release.
+- `cue model list/pull/gemma` now prints a friendly install hint (brew / curl / winget) if Ollama is missing, instead of an opaque exec error.
+
+**Improved**
+- README install section: explicit Arch Linux guidance, versioned-install snippets, build-from-source instructions.
 
 ---
 
