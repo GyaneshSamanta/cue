@@ -30,7 +30,7 @@
 
 **What.** Cue is a Go-based terminal companion that bundles queue management, **semantic macros**, declarative **environment stores**, smart history, and Claude Code orchestration into a single statically-linked binary. No Node, no Python, no Ruby required. Everything runs locally — **zero telemetry**.
 
-**Who.** Built by **Gyanesh Samanta** with contributions from **Deepak Singh**.
+**Who.** Built by **Gyanesh Samanta** with contributions from **Chris Chen** ([@fuleinist](https://github.com/fuleinist)).
 
 **When.** Hacked together end-to-end between **March 28 and April 1, 2026** — five days of intense, caffeinated commits to ship v2.0.
 
@@ -233,7 +233,7 @@ When you run `cue`, **zero telemetry or user data leaves your computer**.
 ## Credits
 
 - **Gyanesh Samanta** — Author, maintainer ([@GyaneshSamanta](https://github.com/GyaneshSamanta))
-- **Deepak Singh** — Contributor
+- **Chris Chen** ([@fuleinist](https://github.com/fuleinist)) — Contributor
 
 <div align="center">
   <p><b>Built with care by Gyanesh.</b></p>
