@@ -146,30 +146,48 @@ During installation, it offers multiple execution engines:
 
 ---
 
-## 🧠 Local Models (Ollama, Gemma & friends)
+## 🧠 Local Models — Now with Google Gemma 3
 
-Run open-weight models on your own machine, then point Claude Code at them. Cue takes care of pulling, switching, and benchmarking.
+Cue v2.2 ships first-class support for **Google Gemma 3** — Google DeepMind's open-weight model family — alongside the full `cue model` command suite. Run powerful AI **entirely offline, for free**, on your own hardware.
+
+### Why Gemma?
+
+Gemma 3 is Google's most capable open-weight series yet. It punches well above its weight class in coding, reasoning, and instruction-following — and because it runs locally through [Ollama](https://ollama.com/download), **your code never leaves your machine.**
+
+### Quick Start
 
 ```bash
-cue model recommend           # hardware-aware suggestions for your laptop
-cue model gemma               # one-shot install of Google Gemma 3 (4B default)
-cue model gemma 12b           # bigger Gemma for stronger quality
-cue model pull qwen2.5-coder:7b
-cue model use gemma3:4b       # set as the default for Claude Code
-cue model list                # see what's installed
-cue model benchmark gemma3:4b # quick speed test
+# 1. Get a hardware-aware recommendation
+cue model recommend
+
+# 2. Install Gemma (defaults to 4B — great for 8 GB+ RAM)
+cue model gemma
+
+# 3. Or pick a size explicitly
+cue model gemma 1b    # ultra-light, instant load
+cue model gemma 12b   # high quality, needs ~16 GB RAM
+cue model gemma 27b   # best quality, needs ~32 GB RAM
+
+# 4. Point Claude Code at it
+cue model use gemma3:4b
+
+# 5. Other useful commands
+cue model list                 # see every installed model
+cue model benchmark gemma3:4b  # measure tokens/sec on your hardware
+cue model pull qwen2.5-coder:7b  # pull any Ollama model by name
 ```
 
-**Gemma sizes** at a glance:
+### Gemma 3 Size Guide
 
-| Tag | Size | Best for |
-| :--- | :--- | :--- |
-| `gemma3:1b` | ~0.8 GB | Tiny laptops, instant load |
-| `gemma3:4b` | ~3.3 GB | Default — strong general use on 8 GB+ RAM |
-| `gemma3:12b` | ~8.1 GB | High quality on 16 GB RAM / 12 GB VRAM |
-| `gemma3:27b` | ~17 GB  | Best local quality on 32 GB RAM / 24 GB VRAM |
+| Tag | Size on disk | RAM needed | Sweet spot |
+| :--- | :---: | :---: | :--- |
+| `gemma3:1b` | ~0.8 GB | 4 GB | Lightweight laptops, CI environments |
+| `gemma3:4b` | ~3.3 GB | 8 GB | **Recommended default** — fast and capable |
+| `gemma3:12b` | ~8.1 GB | 16 GB | Strong reasoning and code quality |
+| `gemma3:27b` | ~17 GB | 32 GB | Best local quality available |
 
-> Cue requires [Ollama](https://ollama.com/download) for local models. Run `cue model gemma` and Cue will tell you exactly how to install it if it's missing.
+> [!NOTE]
+> Cue requires [Ollama](https://ollama.com/download) as the local model runtime. If it isn't installed, `cue model gemma` will print exact install instructions for your OS (brew / curl / winget) rather than crashing.
 
 ---
 
@@ -240,6 +258,37 @@ ui.HandleError(se)
 
 **Improved**
 - README install section: explicit Arch Linux guidance, versioned-install snippets, build-from-source instructions.
+
+---
+
+## 🤝 Contributors
+
+Thank you to everyone who has contributed to Cue!
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/GyaneshSamanta">
+          <img src="https://github.com/GyaneshSamanta.png" width="80" height="80" style="border-radius: 50%;" alt="Gyanesh Samanta" /><br />
+          <sub><b>Gyanesh Samanta</b></sub>
+        </a><br />
+        <sub>Creator & Maintainer</sub>
+      </td>
+      <td align="center">
+        <a href="https://github.com/fuleinist">
+          <img src="https://github.com/fuleinist.png" width="80" height="80" style="border-radius: 50%;" alt="Chris Chen" /><br />
+          <sub><b>Chris Chen</b></sub>
+        </a><br />
+        <sub><a href="https://github.com/GyaneshSamanta/cue/pull/16">cue toolkit command</a></sub>
+      </td>
+    </tr>
+  </table>
+
+  <br />
+
+  <p>Want to see your face here? <a href="CONTRIBUTING.md"><b>Contribute to Cue →</b></a></p>
+</div>
 
 ---
 
