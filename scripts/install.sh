@@ -43,10 +43,15 @@ detect_platform() {
 
 # Get latest release version
 get_latest_version() {
-    VERSION=$(curl -fsSL "https://api.github.com/repos/${REPO}/releases/latest" | grep '"tag_name"' | sed -E 's/.*"v?([^"]+)".*/\1/')
+    if [ -n "${CUE_VERSION:-}" ]; then
+        VERSION="${CUE_VERSION#v}"
+        print_ok "Using requested version: v${VERSION}"
+        return
+    fi
+    VERSION=$(curl -fsSL "https://api.github.com/repos/${REPO}/releases/latest" | grep '"tag_name"' | head -n1 | sed -E 's/.*"tag_name"[[:space:]]*:[[:space:]]*"v?([^"]+)".*/\1/')
     if [ -z "$VERSION" ]; then
-        VERSION="1.0.0"
-        print_warn "Could not fetch latest version, using v${VERSION}"
+        print_err "Could not fetch latest release. Set CUE_VERSION=vX.Y.Z to install a specific version, or download from https://github.com/${REPO}/releases"
+        exit 1
     fi
     print_ok "Latest version: v${VERSION}"
 }

@@ -25,7 +25,7 @@
 <br>
 
 <div align="center">
-  <h2>📺 Welcome to v2.0</h2>
+  <h2>📺 Welcome to v2.2</h2>
   <img src="docs/assets/onboarding_demo.gif" alt="Onboarding Demo" width="900" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
   <br><br>
   <h3>🏪 Environment Store Management</h3>
@@ -56,14 +56,23 @@ Modern application development requires immense cognitive overhead. Should you u
 The CLI distributes as a self-contained, statically linked fat binary. No complex Node/Python/Ruby dependencies are strictly required to run it!
 
 <details>
-<summary><b>🐧 Linux / macOS</b></summary>
+<summary><b>🐧 Linux / macOS (incl. Arch Linux support)</b></summary>
 <br>
 
+**One-liner install (Ubuntu / Debian / Arch / macOS):**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/GyaneshSamanta/cue/main/scripts/install.sh | bash
 ```
 
-> **Note for Arch Linux Users:** The `install.sh` script is fully compatible with Arch Linux. For optimal compatibility with future AUR packaging and dependencies, ensure you have the base development tools installed via `sudo pacman -S base-devel`.
+To pin a specific version:
+```bash
+curl -fsSL https://raw.githubusercontent.com/GyaneshSamanta/cue/main/scripts/install.sh | CUE_VERSION=v2.1.0 bash
+```
+
+**Arch Linux specifics:** The `install.sh` script works directly on Arch. We recommend having `base-devel`, `curl`, and `sudo` ready (`sudo pacman -S --needed base-devel curl`).
+
+> [!TIP]
+> **AUR packaging:** AUR support (`cue-bin`) is currently in development. For now, the direct install is the recommended path.
 
 </details>
 
@@ -73,6 +82,25 @@ curl -fsSL https://raw.githubusercontent.com/GyaneshSamanta/cue/main/scripts/ins
 
 ```powershell
 iwr https://raw.githubusercontent.com/GyaneshSamanta/cue/main/scripts/install.ps1 -useb | iex
+```
+
+To pin a specific version:
+```powershell
+$env:CUE_VERSION = 'v2.1.0'; iwr https://raw.githubusercontent.com/GyaneshSamanta/cue/main/scripts/install.ps1 -useb | iex
+```
+
+</details>
+
+<details>
+<summary><b>🛠 Build from source</b></summary>
+<br>
+
+Requires Go 1.26+.
+
+```bash
+git clone https://github.com/GyaneshSamanta/cue && cd cue
+go build -o cue .
+./cue --version
 ```
 
 </details>
@@ -115,6 +143,33 @@ cue claude-code install
 During installation, it offers multiple execution engines:
 1. **API Mode:** Sends code direct to the cloud. Best for reasoning.
 2. **Local Mode (Ollama):** Purely local. Pulls models down through `ollama` and proxies them securely. **This implementation is 100% free and extremely private.**
+
+---
+
+## 🧠 Local Models (Ollama, Gemma & friends)
+
+Run open-weight models on your own machine, then point Claude Code at them. Cue takes care of pulling, switching, and benchmarking.
+
+```bash
+cue model recommend           # hardware-aware suggestions for your laptop
+cue model gemma               # one-shot install of Google Gemma 3 (4B default)
+cue model gemma 12b           # bigger Gemma for stronger quality
+cue model pull qwen2.5-coder:7b
+cue model use gemma3:4b       # set as the default for Claude Code
+cue model list                # see what's installed
+cue model benchmark gemma3:4b # quick speed test
+```
+
+**Gemma sizes** at a glance:
+
+| Tag | Size | Best for |
+| :--- | :--- | :--- |
+| `gemma3:1b` | ~0.8 GB | Tiny laptops, instant load |
+| `gemma3:4b` | ~3.3 GB | Default — strong general use on 8 GB+ RAM |
+| `gemma3:12b` | ~8.1 GB | High quality on 16 GB RAM / 12 GB VRAM |
+| `gemma3:27b` | ~17 GB  | Best local quality on 32 GB RAM / 24 GB VRAM |
+
+> Cue requires [Ollama](https://ollama.com/download) for local models. Run `cue model gemma` and Cue will tell you exactly how to install it if it's missing.
 
 ---
 
@@ -164,6 +219,27 @@ se := ui.NewStructuredError(
 )
 ui.HandleError(se)
 ```
+
+---
+
+## 📋 Changelog
+
+### v2.2.0 — May 2026
+
+**New**
+- **`cue model` command** — the `internal/model` package was wired up and is now a first-class CLI feature. Run `cue model --help` to see all subcommands.
+- **Google Gemma 3 support** — `cue model gemma [1b|4b|12b|27b]` installs Google Gemma via Ollama in one command. Hardware-aware `cue model recommend` now includes all four Gemma sizes.
+- **`cue toolkit` command** — install, upgrade, remove, and inspect developer tools with automatic version-manager bootstrapping (e.g. `cue toolkit install node`). Closes the loop from `cue doctor fix --all`, which had been suggesting `cue toolkit install <tool>` when the command didn't yet exist.
+- **Release pipeline** — added `.github/workflows/release.yml` that cross-compiles for linux/darwin/windows × amd64/arm64 and uploads binaries to GitHub Releases on every version tag. **This is what was causing the broken `install.sh` / `install.ps1`** — prior releases had no binary assets.
+- **CI pipeline** — added `.github/workflows/ci.yml` for build / vet / test checks on every PR.
+
+**Fixed**
+- `install.sh` and `install.ps1` now fail with a clear actionable error if no release is found, instead of silently downloading nothing.
+- Both scripts accept a `CUE_VERSION=vX.Y.Z` / `$env:CUE_VERSION` env var to pin to a specific release.
+- `cue model list/pull/gemma` now prints a friendly install hint (brew / curl / winget) if Ollama is missing, instead of an opaque exec error.
+
+**Improved**
+- README install section: explicit Arch Linux guidance, versioned-install snippets, build-from-source instructions.
 
 ---
 

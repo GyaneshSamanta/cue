@@ -12,8 +12,25 @@ import (
 	"github.com/GyaneshSamanta/cue/internal/ui"
 )
 
+// EnsureOllama verifies that the Ollama runtime is installed and reachable.
+// It returns a helpful, actionable error if not — rather than letting an
+// opaque exec failure bubble up.
+func EnsureOllama() error {
+	if _, err := exec.LookPath("ollama"); err != nil {
+		ui.PrintWarning("Ollama is not installed. Install it from https://ollama.com/download")
+		ui.PrintDim("  macOS:    brew install ollama")
+		ui.PrintDim("  Linux:    curl -fsSL https://ollama.com/install.sh | sh")
+		ui.PrintDim("  Windows:  winget install Ollama.Ollama")
+		return fmt.Errorf("ollama not found in PATH")
+	}
+	return nil
+}
+
 // ListModels shows all Ollama models.
 func ListModels() error {
+	if err := EnsureOllama(); err != nil {
+		return err
+	}
 	out, err := exec.Command("ollama", "list").CombinedOutput()
 	if err != nil {
 		return fmt.Errorf("ollama not running or not installed: %w", err)
@@ -82,6 +99,10 @@ func Recommend() error {
 		{"Reasoning", "deepseek-r1:8b", "5.2 GB", "Strong multi-step reasoning", ramGB >= 12},
 		{"Reasoning (large)", "deepseek-r1:14b", "9.1 GB", "Best reasoning under 15B", ramGB >= 24},
 		{"General", "llama3.1:8b", "4.7 GB", "Versatile general model", ramGB >= 12},
+		{"Gemma (tiny)", "gemma3:1b", "0.8 GB", "Google Gemma 3 — runs anywhere", true},
+		{"Gemma (default)", "gemma3:4b", "3.3 GB", "Google Gemma 3 — strong general use", ramGB >= 8},
+		{"Gemma (quality)", "gemma3:12b", "8.1 GB", "Google Gemma 3 — high quality", ramGB >= 16 || vramGB >= 12},
+		{"Gemma (large)", "gemma3:27b", "17 GB", "Google Gemma 3 — best quality", ramGB >= 32 || vramGB >= 24},
 	}
 
 	fmt.Println("  Recommendations:")
